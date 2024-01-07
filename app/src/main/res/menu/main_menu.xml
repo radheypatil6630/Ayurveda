@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+     <item android:id="@+id/home"
+         android:icon="@drawable/baseline_home_24"
+         android:title="Home" />
+
+    <item android:id="@+id/product_History"
+        android:icon="@drawable/baseline_shopping_cart_24"
+        android:title="Order_History" />
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/baseline_account_circle_24" />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/baseline_share_24"
+        android:title="share"/>
+
+    <item android:id="@+id/logout"
+         android:icon="@drawable/baseline_logout_24"
+         android:title="Logout" />
+
+
+
+<!--                <item  android:id="@+id/share"-->
+<!--                    android:title="Share"-->
+<!--                    android:icon="@drawable/baseline_share_24"/>-->
+<!--                <item  android:id="@+id/bedtime"-->
+<!--                    android:title="Bed time"-->
+<!--                    android:icon="@drawable/baseline_bedtime_24"/>-->
+
+
+
+</menu>
