@@ -7,6 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,14 +22,14 @@ import android.view.ViewGroup;
  */
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //FirebaseAuth mAuth;
+    private Button save,logout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -52,13 +59,36 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+
+
+//            View view=getLayoutInflater().inflate(R.layout.fragment_profile,container,false);
+
+
+
         }
+    }
+    private void showToastMessage()
+    {
+        Toast.makeText(requireContext(), "logout successfully", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view=inflater.inflate(R.layout.fragment_profile, container, false);
+
+      //  FirebaseApp.initializeApp(requireContext());
+      //  mAuth = FirebaseAuth.getInstance();
+
+        save = (Button) view.findViewById(R.id.saveDetails);
+        logout = (Button) view.findViewById(R.id.logout);
+
+      logout.setOnClickListener(v -> {
+          showToastMessage();
+          FirebaseAuth.getInstance().signOut();
+      });
+        return view;
     }
 }
