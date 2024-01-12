@@ -1,5 +1,6 @@
 package com.example.mrsayurveda;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -30,6 +32,7 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     //FirebaseAuth mAuth;
     private Button save,logout;
+    private EditText email,password;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -73,6 +76,7 @@ public class ProfileFragment extends Fragment {
         Toast.makeText(requireContext(), "logout successfully", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,9 +89,19 @@ public class ProfileFragment extends Fragment {
         save = (Button) view.findViewById(R.id.saveDetails);
         logout = (Button) view.findViewById(R.id.logout);
 
+        email=view.findViewById(R.id.Email);
+        password=view.findViewById(R.id.Password);
+
+
       logout.setOnClickListener(v -> {
           showToastMessage();
+
+        //  email.setText("");
+          //password.setText("");
           FirebaseAuth.getInstance().signOut();
+
+          requireActivity().finish();
+
       });
         return view;
     }

@@ -1,0 +1,280 @@
+<FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F2F2F2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:columnCount="2">
+
+
+        <EditText
+            android:id="@+id/editTextText4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/search_bg"
+            android:drawableLeft="@drawable/baseline_search_24"
+            android:drawablePadding="8dp"
+            android:elevation="10dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="Try Searching 'Mumbai Flights'"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="15dp" />
+
+
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product1"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product2"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product3"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/Product4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product4"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product5"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product6"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product7"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/Product8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product8"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/Product9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product9"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/Product10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homeopathy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:layout_below="@id/Product10"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:layout_marginLeft="10dp">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/Product2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/drug"-->
+<!--            android:scaleType="centerCrop"/>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Product"-->
+<!--            android:layout_below="@id/Product2"-->
+<!--            android:gravity="center"/>-->
+
+<!--    </RelativeLayout>-->
+
+        </GridLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

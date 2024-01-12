@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                             }
                         });
+                Textemail.setText("");
+                Textpassword.setText("");
 
             }
         });
