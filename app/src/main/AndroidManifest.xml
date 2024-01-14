@@ -13,14 +13,17 @@
         android:theme="@style/Theme.MrsAyurveda"
         tools:targetApi="31">
         <activity
+            android:name=".medicine_product"
+            android:exported="false" />
+        <activity
+            android:name=".MedicineProductAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".cosmeticProductAdapter"
+            android:exported="false" />
+        <activity
             android:name=".Cosmetic_product"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

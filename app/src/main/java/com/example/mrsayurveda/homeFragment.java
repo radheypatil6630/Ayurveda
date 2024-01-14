@@ -1,5 +1,7 @@
 package com.example.mrsayurveda;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,10 @@ public class homeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7;
+
+    private TextView textView1,textView2,textView3,textView4;
 
     public homeFragment() {
         // Required empty public constructor
@@ -55,10 +67,40 @@ public class homeFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+      View view=inflater.inflate(R.layout.fragment_home, container, false);
+
+        imageView1=(ImageView) view.findViewById(R.id.imageView1);
+         imageView2 = (ImageView) view.findViewById(R.id.imageView2);
+        imageView3 = (ImageView) view.findViewById(R.id.imageView3);
+
+
+
+
+        imageView1.setOnClickListener(v -> {
+
+            //  email.setText("");
+            //password.setText("");
+            Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            Intent i=new Intent(getContext(),medicine_product.class);
+
+            startActivity(i);
+        });
+
+        imageView3.setOnClickListener(v -> {
+
+            //  email.setText("");
+            //password.setText("");
+            Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+           Intent i=new Intent(getContext(),Cosmetic_product.class);
+
+            startActivity(i);
+        });
+        //return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 }

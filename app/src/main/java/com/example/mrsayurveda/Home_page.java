@@ -67,7 +67,7 @@ public class Home_page extends AppCompatActivity
         {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, shareFragment)
+                    .replace(R.id.flFragment, homeFragment)
                     .commit();
             return true;
         }
