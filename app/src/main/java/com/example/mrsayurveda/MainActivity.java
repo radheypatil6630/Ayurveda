@@ -53,10 +53,24 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                             }
                         });
-                Textemail.setText("");
-                Textpassword.setText("");
 
             }
         });
+
     }
+
+        // ... other code
+
+
+        public void onClearEditText(String email, String password) {
+            // Clear your EditText in MainActivity here
+            // For example:
+           Textemail.setText("");
+           Textpassword.setText("");
+
+            Textemail.setVisibility(View.INVISIBLE);
+            Textpassword.setVisibility(View.INVISIBLE);
+        }
+
+
 }

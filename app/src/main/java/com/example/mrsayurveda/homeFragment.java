@@ -83,8 +83,7 @@ public class homeFragment extends Fragment {
 
         imageView1.setOnClickListener(v -> {
 
-            //  email.setText("");
-            //password.setText("");
+
             Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
             Intent i=new Intent(getContext(),medicine_product.class);
 
@@ -93,8 +92,7 @@ public class homeFragment extends Fragment {
 
         imageView3.setOnClickListener(v -> {
 
-            //  email.setText("");
-            //password.setText("");
+
             Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
            Intent i=new Intent(getContext(),Cosmetic_product.class);
 

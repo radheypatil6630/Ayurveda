@@ -1,39 +1,89 @@
 package com.example.mrsayurveda;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Toast;
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.mrsayurveda.R;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cosmetic_product extends AppCompatActivity {
 
-    private RecyclerView recycleview;
-    RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    DatabaseReference database;
+    cosmeticProductAdapter CosmeticProductAdapter;
+    ArrayList<ProductList> list;
 
-    cosmeticProductAdapter cosmeticProductAdapter;
-
-    // ArrayList for person names
-    String []product_name = {"MORGA","ORCHID","MEDIMIX","YASO","APPLE CIDER VINGER","CHANDRIKA","CHARCOAL BEAD","CHARCOAL","DHATHRI","ESSENCIA","BIO NEEM","FOREST ESSENTIALS","MULTANI MITTI","ONION OIL","RICE SCRUB","WALNUT","BIO KELP","SHAMPOO","NEEM OIL"};
-
-    int []product_image = {R.drawable.body_moisturizer,R.drawable.bodylotion1,R.drawable.soap1,R.drawable.bodylotion2,R.drawable.facewash1,R.drawable.soap2,R.drawable.facewash2,R.drawable.facewash3,R.drawable.soap4,R.drawable.facewash4,R.drawable.facewash5,R.drawable.soap3,R.drawable.soap5,R.drawable.hairfall_control,R.drawable.scrub1,R.drawable.scrub2,R.drawable.shampoo1,R.drawable.shampoo2,R.drawable.neem_oil};
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetic_product);
-        // get the reference of RecyclerView
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView); // Correct
-        layoutManager=new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(layoutManager);
+    // database for accessing images and its url
+        recyclerView=findViewById(R.id.recyclerView);
+        database= FirebaseDatabase.getInstance().getReference("CosmeticProductlist");
 
-        cosmeticProductAdapter =new cosmeticProductAdapter(product_image,product_name);
-        recyclerView.setAdapter(cosmeticProductAdapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
-    }
+        list=new ArrayList<>();
+        CosmeticProductAdapter=new cosmeticProductAdapter(Cosmetic_product.this,list);
+        recyclerView.setAdapter(CosmeticProductAdapter);
+
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                list.clear();
+
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : categorySnapshot.getChildren()) {
+                        //Images and its name are displayed
+
+
+                        ProductList ProductList = dataSnapshot.getValue(ProductList.class);
+                        list.add(ProductList);
+
+
+                    }
+                }
+                if (CosmeticProductAdapter != null) {
+                    CosmeticProductAdapter.notifyDataSetChanged();
+                }
+              //  CosmeticProductAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            //handle error
+                Toast.makeText(Cosmetic_product.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+   }
 }
+
+
+
+
+
+

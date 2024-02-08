@@ -62,7 +62,7 @@ public class MedicineProductAdapter extends RecyclerView.Adapter<MedicineProduct
 
             super(itemView);
             imageView=itemView.findViewById(R.id.image);
-            textView=itemView.findViewById(R.id.name);
+            textView=itemView.findViewById(R.id.product_name);
         }
     }
 }

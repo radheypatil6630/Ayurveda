@@ -22,7 +22,7 @@ public class medicine_product extends AppCompatActivity {
 
 
 
-    int []product_image = {R.drawable.patanjali_resporatary,R.drawable.patanjali_bone,R.drawable.patanjali_renogrit,R.drawable.patanjali_bp,R.drawable.piles,R.drawable.thyrogrit,R.drawable.zamdu_spray,R.drawable.bp,R.drawable.blood_glucoose,R.drawable.diagestion,R.drawable.dabar,R.drawable.diabetics,R.drawable.pachak_medicine,R.drawable.sheopal,R.drawable.chawanprash,R.drawable.asthma,R.drawable.brain_booster,R.drawable.patanjali_khasi,R.drawable.khasi3,R.drawable.patanjali_khasi,R.drawable.khasi1,R.drawable.eyedrop6,R.drawable.eyedrop5,R.drawable.eyedrop4,R.drawable.eyedrop3,R.drawable.eyedrop2,R.drawable.skin1,R.drawable.skin2,R.drawable.skin3,R.drawable.skin4,R.drawable.skin5};
+    int []product_image = {R.drawable.medical,R.drawable.cosmetic};
 
     @SuppressLint("MissingInflatedId")
     @Override
