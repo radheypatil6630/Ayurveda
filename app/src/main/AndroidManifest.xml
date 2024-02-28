@@ -12,26 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MrsAyurveda"
         tools:targetApi="31">
-        <activity
-            android:name=".medicine_product"
-            android:exported="false" />
-        <activity
-            android:name=".MedicineProductAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".cosmeticProductAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".Cosmetic_product"
-            android:exported="false">
-<!--        <uses-permission android:name="android.permission.INTERNET"-->
-<!--            tools:ignore="WrongManifestParent" />-->
+        <activity android:name=".RegisterPage">
+            <!-- Add any intent filters or other configuration for the activity here -->
         </activity>
+        <activity
+            android:name=".ProductListActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".medicine_product"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".MedicineProductAdapter"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".cosmeticProductAdapter"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".Cosmetic_product"-->
+<!--            android:exported="false">-->
 
-
-        <!--      passes internet connectivity-->
-
-
+            <!-- <uses-permission android:name="android.permission.INTERNET" -->
+            <!-- tools:ignore="WrongManifestParent" /> -->
+<!--        </activity> &lt;!&ndash; passes internet connectivity &ndash;&gt;-->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home_page"
+            android:name=".homeActivity"
             android:exported="false" />
     </application>
 
