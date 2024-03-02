@@ -10,14 +10,14 @@ public class ProductList {
     }
 
     public String getImageUrl() {
-        return imageUrl != null ? imageUrl : "";
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public String getPrice(){return price != null ? price : "";
+    public String getPrice(){return price ;
     }
 
     public void setPrice(String price) {
@@ -25,7 +25,7 @@ public class ProductList {
     }
 
     public String getProductName() {
-        return ProductName != null ? ProductName : "";
+        return ProductName;
     }
 
     public void setProductName(String productName) {
