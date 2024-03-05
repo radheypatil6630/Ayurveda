@@ -195,7 +195,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="11dp"
+                        android:layout_marginTop="20dp"
                         android:orientation="vertical"
                         android:padding="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -209,59 +209,69 @@
                             android:id="@+id/textView4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="know about Ayurveda"
-                            android:textSize="20sp"
+                            android:text="Know About Ayurveda"
+                            android:textSize="20dp"
                             android:textStyle="bold" />
 
                         <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="10dp">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal" >
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView4"
-                                    android:layout_width="368dp"
-                                    android:layout_height="180dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginRight="10dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/homeopathy"
-                                    app:shapeAppearanceOverlay="@style/circular" />
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView5"
-                                    android:layout_width="368dp"
-                                    android:layout_height="180dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginRight="10dp"
-                                    app:shapeAppearanceOverlay="@style/circular"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/homeopathy" />
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView6"
-                                    android:layout_width="368dp"
-                                    android:layout_height="180dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginRight="10dp"
-                                    app:shapeAppearanceOverlay="@style/circular"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/drug" />
+                                android:orientation="horizontal"
+                                android:paddingBottom="5dp">
 
                                 <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/imageView7"
                                     android:layout_width="368dp"
-                                    android:layout_height="180dp"
+                                    android:layout_height="220dp"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginRight="10dp"
                                     app:shapeAppearanceOverlay="@style/circular"
                                     android:scaleType="centerCrop"
-                                    android:src="@drawable/cosmetic" />
+                                    android:elevation="10dp"
+                                    android:src="@drawable/homeremedies" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="368dp"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    android:scaleType="centerCrop"
+                                    android:elevation="10dp"
+                                    android:src="@drawable/ayurvedichospital" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="368dp"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    android:scaleType="centerCrop"
+                                    android:elevation="10dp"
+                                    android:src="@drawable/vedayurveda" />
+
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="368dp"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:scaleType="centerCrop"
+                                    android:elevation="10dp"
+                                    android:src="@drawable/homeopathy"
+                                    app:shapeAppearanceOverlay="@style/circular" />
+
+
+
+
                             </LinearLayout>
                         </HorizontalScrollView>
 

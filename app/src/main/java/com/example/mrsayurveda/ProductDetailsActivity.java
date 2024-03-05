@@ -1,5 +1,6 @@
 package com.example.mrsayurveda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,29 +19,36 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
 
         // Assuming you passed product details through Intent
-        String imageUrl = getIntent().getStringExtra("IMAGE_URL");
-        String productName = getIntent().getStringExtra("PRODUCT_NAME");
-        String productDescription = getIntent().getStringExtra("PRODUCT_DESCRIPTION");
-        String productPrice = getIntent().getStringExtra("PRODUCT_PRICE");
+        Intent intent = getIntent();
+        if (intent != null) {
+            String imageUrl = getIntent().getStringExtra("imageUrl");
+            String productName = getIntent().getStringExtra("ProductName");
+            String productDescription = getIntent().getStringExtra("ProductDescription");
+            String price = getIntent().getStringExtra("price");
 
-        ImageView productImageView = findViewById(R.id.productImageView);
-        TextView productNameTextView = findViewById(R.id.productNameTextView);
-        TextView productDescriptionTextView = findViewById(R.id.productDescriptionTextView);
-        TextView productPriceTextView = findViewById(R.id.productPriceTextView);
-        Button purchaseButton = findViewById(R.id.purchaseButton);
+            ImageView productImageView = findViewById(R.id.productImageView);
+            TextView productNameTextView = findViewById(R.id.productNameTextView);
+            TextView productDescriptionTextView = findViewById(R.id.productDescriptionTextView);
+            TextView productPriceTextView = findViewById(R.id.productPriceTextView);
+            Button purchaseButton = findViewById(R.id.purchaseButton);
 
-        // Load image using Picasso library
-        Picasso.get().load(imageUrl).into(productImageView);
+            // Load image using Picasso library
+            Picasso.get().load(imageUrl).into(productImageView);
 
-        // Set text for other views
-        productNameTextView.setText(productName);
-        productDescriptionTextView.setText(productDescription);
-        productPriceTextView.setText(productPrice);
+            // Set text for other views
+            productNameTextView.setText(productName);
+            productDescriptionTextView.setText(productDescription);
+            productPriceTextView.setText(price);
 
-        // Add click listener to purchase button if needed
-        purchaseButton.setOnClickListener(v -> {
-            // Handle purchase button click
-        });
+            // Add click listener to purchase button if needed
+//            purchaseButton.setOnClickListener(v -> {
+//                // Handle purchase button click
+//                Intent purchaseIntent = new Intent(ProductDetailsActivity.this, Purchaseproduct.class);
+//                purchaseIntent.putExtra("ProductName", productName);
+//                purchaseIntent.putExtra("price", price);
+//                startActivity(purchaseIntent);
+//            });
+        }
     }
 }
 

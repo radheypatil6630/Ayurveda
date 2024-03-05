@@ -1,4 +1,5 @@
 package com.example.mrsayurveda;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,19 @@ public class ProductListActivity extends AppCompatActivity {
         // Get the category from the intent
         String category = getIntent().getStringExtra("CATEGORY");
         productList = new ArrayList<>();
-        adapter = new ProductViewHolder(productList);
+        adapter = new ProductViewHolder(productList, new ProductViewHolder.OnItemClickListener()  {
+            @Override
+            public void onItemClick(ProductList product, int position) {
+                // Handle item click
+                // Example: Open ProductDetailsActivity and pass product details
+                Intent intent = new Intent(ProductListActivity.this, ProductDetailsActivity.class);
+                intent.putExtra("imageUrl", product.getImageUrl());
+                intent.putExtra("ProductName", product.getProductName());
+                intent.putExtra("ProductDescription", product.getDescription()); // Add description logic
+                intent.putExtra("price", product.getPrice());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         // Set the reference to the specific category in the database
@@ -52,13 +65,35 @@ public class ProductListActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ProductList product = snapshot.getValue(ProductList.class);
-                    if (product != null) {
-                        productList.add(product);
-                        Log.d("FirebaseData", "Product: " + product.getProductName() + ", " + product.getImageUrl() + ", " + product.getPrice());
+//                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+//                    // First loop for categories (e.g., Cosmetic, Food, Medical)
+//                    String category = categorySnapshot.getKey();
+                    for (DataSnapshot productTypeSnapshot : dataSnapshot.getChildren()) {
+
+                        // Second loop for product types within each category (e.g., soap, biscuit, liver)
+                        String productType = productTypeSnapshot.getKey();
+
+                        for (DataSnapshot productSnapshot : productTypeSnapshot.getChildren()) {
+                            // Third loop for products within each product type (e.g., Product1, Product2, ...)
+                            String productName = productSnapshot.child("ProductName").getValue(String.class);
+                            String imageUrl = productSnapshot.child("imageUrl").getValue(String.class);
+                            String price = productSnapshot.child("price").getValue(String.class);
+                            String description = productSnapshot.child("description").getValue(String.class);
+
+                            ProductList product = new ProductList();
+                            product.setProductName(productName);
+                            product.setImageUrl(imageUrl);
+                            product.setPrice(price);
+                            product.setDescription(description);
+
+                            productList.add(product);
+//
+
                     }
                 }
+
+
+
                 adapter.notifyDataSetChanged();
                 // After retrieving data, set up the RecyclerView adapter
 //                adapter = new ProductViewHolder(productList);
@@ -70,52 +105,20 @@ public class ProductListActivity extends AppCompatActivity {
                 Log.e("FirebaseData", "Error loading data", databaseError.toException());
             }
         });
+        adapter.setOnItemClickListener(new ProductViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(ProductList product, int position) {
+                // Handle item click
+                Intent intent = new Intent(ProductListActivity.this, ProductDetailsActivity.class);
+                intent.putExtra("imageUrl", product.getImageUrl());
+                intent.putExtra("ProductName", product.getProductName());
+                intent.putExtra("ProductDescription",  product.getDescription()); // Add description logic
+                intent.putExtra("price", product.getPrice());
+                startActivity(intent);
+            }
+        });
     }
 
 
-        //        FirebaseRecyclerOptions<ProductList> options =
-//                new FirebaseRecyclerOptions.Builder<ProductList>()
-//                        .setQuery(databaseReference, ProductList.class)
-//                        .build();
 
-//        adapter = new FirebaseRecyclerAdapter<ProductList, ProductViewHolder>(options) {
-//
-//@Override
-//protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull ProductList model) {
-//    // Bind data to the ViewHolder
-////    holder.setDetails(model.getProductName(), model.getimageUrl(), model.getprice());
-//    Log.d("FirebaseData", "Product Name: " + model.getProductName());
-//    Log.d("FirebaseData", "Image URL: " + model.getImageUrl());
-//    Log.d("FirebaseData", "Price: " + model.getPrice());
-//    String productName = model.getProductName() != null ? model.getProductName() : "Default Name";
-//    String imageUrl = model.getImageUrl() != null ? model.getImageUrl() : "Default Image URL";
-//    String price = model.getPrice() != null ? model.getPrice() : "Default Price";
-//
-//    // Bind data to the ViewHolder
-//    holder.setDetails(productName, imageUrl, price);
-//}
-//
-//            @NonNull
-//            @Override
-//            public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                // Create a new ViewHolder for each item
-//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleview, parent, false);
-//                return new ProductViewHolder(view);
-//            }
-//        };
-//
-//        recyclerView.setAdapter(adapter);
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        adapter.startListening();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        adapter.stopListening();
-//    }
 }

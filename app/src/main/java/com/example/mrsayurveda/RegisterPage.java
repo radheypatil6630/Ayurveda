@@ -3,6 +3,7 @@ package com.example.mrsayurveda;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -88,5 +89,15 @@ public class RegisterPage extends AppCompatActivity {
             Intent stm = new Intent(RegisterPage.this, MainActivity.class);
             startActivity(stm);
         });
+
     }
+//    public void onClearEditText(String email, String password) {
+//        // Clear your EditText in MainActivity here
+//        // For example:
+//        email.setTex("");
+//        password.setText("");
+//
+//        email.setVisibility(View.INVISIBLE);
+//        password.setVisibility(View.INVISIBLE);
+//    }
 }

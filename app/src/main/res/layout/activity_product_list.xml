@@ -21,7 +21,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:hint="Search cosmetic product's"
+            android:hint="Search Product"
             android:inputType="text"
             android:paddingStart="20dp"
             android:paddingTop="15dp"

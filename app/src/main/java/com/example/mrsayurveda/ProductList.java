@@ -5,6 +5,8 @@ public class ProductList {
     private String price;
     private String ProductName;
 
+    private String description;
+
     public ProductList() {
         // Required default constructor for Firebase
     }
@@ -30,5 +32,12 @@ public class ProductList {
 
     public void setProductName(String productName) {
         this.ProductName = productName;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
