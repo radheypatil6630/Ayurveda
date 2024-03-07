@@ -38,7 +38,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             // Set text for other views
             productNameTextView.setText(productName);
             productDescriptionTextView.setText(productDescription);
-            productPriceTextView.setText(price);
+            productPriceTextView.setText("₹"+price);
 
             // Add click listener to purchase button if needed
 //            purchaseButton.setOnClickListener(v -> {

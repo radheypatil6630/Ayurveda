@@ -40,7 +40,7 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductList product = productList.get(position);
         if (product != null) {
-            holder.setDetails(product.getProductName(), product.getImageUrl(), product.getPrice());
+            holder.setDetails(product.getProductName(), product.getImageUrl(),"₹"+ product.getPrice());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -78,7 +78,13 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
             delivery.setText("Free delivery");
         }
 
+
     }
 
+    public void filterList(List<ProductList> filteredList) {
+            productList.clear();
+            productList.addAll(filteredList);
+            notifyDataSetChanged();
 
+    }
 }

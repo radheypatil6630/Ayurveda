@@ -1,10 +1,14 @@
 package com.example.mrsayurveda;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +33,8 @@ public class ProductListActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private List<ProductList> productList;
     private ProductViewHolder adapter;
-   // private FirebaseRecyclerAdapter<ProductList, ProductViewHolder> adapter;
+
+    private EditText searchEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +42,14 @@ public class ProductListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_list);
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        searchEditText = findViewById(R.id.editTextText4);
 
         // Get the category from the intent
         String category = getIntent().getStringExtra("CATEGORY");
         productList = new ArrayList<>();
-        adapter = new ProductViewHolder(productList, new ProductViewHolder.OnItemClickListener()  {
+        adapter = new ProductViewHolder(productList, new ProductViewHolder.OnItemClickListener() {
             @Override
             public void onItemClick(ProductList product, int position) {
                 // Handle item click
@@ -58,46 +65,43 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         // Set the reference to the specific category in the database
-      //  databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-//                    // First loop for categories (e.g., Cosmetic, Food, Medical)
-//                    String category = categorySnapshot.getKey();
-                    for (DataSnapshot productTypeSnapshot : dataSnapshot.getChildren()) {
 
-                        // Second loop for product types within each category (e.g., soap, biscuit, liver)
-                        String productType = productTypeSnapshot.getKey();
+                for (DataSnapshot productTypeSnapshot : dataSnapshot.getChildren()) {
 
-                        for (DataSnapshot productSnapshot : productTypeSnapshot.getChildren()) {
-                            // Third loop for products within each product type (e.g., Product1, Product2, ...)
-                            String productName = productSnapshot.child("ProductName").getValue(String.class);
-                            String imageUrl = productSnapshot.child("imageUrl").getValue(String.class);
-                            String price = productSnapshot.child("price").getValue(String.class);
-                            String description = productSnapshot.child("description").getValue(String.class);
+                    // Second loop for product types within each category (e.g., soap, biscuit, liver)
+                    String productType = productTypeSnapshot.getKey();
 
-                            ProductList product = new ProductList();
-                            product.setProductName(productName);
-                            product.setImageUrl(imageUrl);
-                            product.setPrice(price);
-                            product.setDescription(description);
+                    for (DataSnapshot productSnapshot : productTypeSnapshot.getChildren()) {
+                        // Third loop for products within each product type (e.g., Product1, Product2, ...)
+                        String productName = productSnapshot.child("ProductName").getValue(String.class);
+                        String imageUrl = productSnapshot.child("imageUrl").getValue(String.class);
+                        String price = productSnapshot.child("price").getValue(String.class);
+                        String description = productSnapshot.child("description").getValue(String.class);
 
-                            productList.add(product);
+                        ProductList product = new ProductList();
+                        product.setProductName(productName);
+                        product.setImageUrl(imageUrl);
+                        product.setPrice(price);
+                        product.setDescription(description);
+                        product.setProductType(productType);
+
+                        productList.add(product);
 //
 
                     }
                 }
 
 
-
                 adapter.notifyDataSetChanged();
-                // After retrieving data, set up the RecyclerView adapter
-//                adapter = new ProductViewHolder(productList);
-//                recyclerView.setAdapter(adapter);
+
+
             }
 
             @Override
@@ -112,13 +116,68 @@ public class ProductListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProductListActivity.this, ProductDetailsActivity.class);
                 intent.putExtra("imageUrl", product.getImageUrl());
                 intent.putExtra("ProductName", product.getProductName());
-                intent.putExtra("ProductDescription",  product.getDescription()); // Add description logic
+                intent.putExtra("ProductDescription", product.getDescription()); // Add description logic
                 intent.putExtra("price", product.getPrice());
                 startActivity(intent);
             }
         });
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Filter products based on search query as the user types
+                filterProducts(editable.toString());
+            }
+        });
     }
 
+    private void filterProducts(String query) {
+        List<ProductList> filteredList = new ArrayList<>();
+
+        for (ProductList product : productList) {
+            if (product != null && product.getProductType() != null){
+                // String productName = product.getProductName();
+                if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase())||   product.getProductType().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(product);
+                }
+                // Check if the product type matches the search query
+//                else if (product.getProductType().toLowerCase().contains(query.toLowerCase())) {
+//                    filteredList.add(product);
+//                }
+            }
+        }
+        // Update the adapter with filtered results
+        adapter.filterList(filteredList);
+
+        // Show a toast message if no results are found
+        if (filteredList.isEmpty() && !query.isEmpty()) {
+            Toast.makeText(ProductListActivity.this, "No product found", Toast.LENGTH_SHORT).show();
+        }
+    }
+        private void showProductsByType (String productType){
+            List<ProductList> filteredList = new ArrayList<>();
+
+            for (ProductList product : productList) {
+                if (product.getProductType().toLowerCase().equals(productType.toLowerCase())) {
+                    filteredList.add(product);
+                }
+            }
+
+            adapter.filterList(filteredList);
+
+            // Show a toast message if no results are found
+            if (filteredList.isEmpty()) {
+                Toast.makeText(ProductListActivity.this, "No ProductType found", Toast.LENGTH_SHORT).show();
+            }
+        }
 
 
 }

@@ -4,8 +4,12 @@ public class ProductList {
     private String imageUrl;
     private String price;
     private String ProductName;
-
     private String description;
+    private String productType;
+
+    // ... (existing getters and setters)
+
+
 
     public ProductList() {
         // Required default constructor for Firebase
@@ -39,5 +43,10 @@ public class ProductList {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getProductType() { return productType;    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

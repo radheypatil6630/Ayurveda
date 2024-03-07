@@ -18,25 +18,32 @@
     android:background="#EDAEC0"
     android:padding="0dp"
     app:shapeAppearanceOverlay="@style/circular">
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="140dp"
+        android:background="@color/white">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="170dp"
         android:layout_height="130dp"
-        android:layout_margin="1dp"
+        android:layout_margin="0dp"
         android:layout_gravity="center"
         android:src="@drawable/cosmetic" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginVertical="0dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         android:background="@color/black" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="#F6C8D5">
 
         <TextView
             android:id="@+id/product_name"
@@ -45,7 +52,8 @@
             android:layout_marginBottom="1dp"
             android:gravity="center"
             android:hint="Name"
-            android:textSize="19dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
             android:textColor="@color/black"/>
 
         <TextView
@@ -53,11 +61,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="1dp"
+            android:paddingLeft="5dp"
             android:layout_marginBottom="1dp"
             android:gravity="left"
             android:hint="price"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"            />
 
         <TextView
             android:id="@+id/delivery"
