@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:background="@drawable/search_bg"
-        android:elevation="20dp">
-        <!-- TODO: Update blank fragment layout -->
+        android:elevation="20dp"
+        tools:context=".ProfileActivity">
+
 
         <LinearLayout
             android:id="@+id/profileLAYOUT"
@@ -35,11 +33,11 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="60dp"
-                android:background="#4321"
+                android:background="@drawable/profile_circle"
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
                 android:layout_marginLeft="28dp"
-                android:src="@drawable/profile_circle"
+                android:backgroundTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -107,4 +105,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>

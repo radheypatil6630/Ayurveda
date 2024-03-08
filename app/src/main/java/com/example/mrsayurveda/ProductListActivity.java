@@ -142,16 +142,18 @@ public class ProductListActivity extends AppCompatActivity {
     private void filterProducts(String query) {
         List<ProductList> filteredList = new ArrayList<>();
 
-        for (ProductList product : productList) {
-            if (product != null && product.getProductType() != null){
-                // String productName = product.getProductName();
-                if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase())||   product.getProductType().toLowerCase().contains(query.toLowerCase())) {
-                    filteredList.add(product);
+        if (query.isEmpty()) {
+            // If the search query is empty, display the entire product list
+            filteredList.addAll(productList);
+        } else {
+            for (ProductList product : productList) {
+                if (product != null && product.getProductType() != null) {
+                    // String productName = product.getProductName();
+                    if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase()) || product.getProductType().toLowerCase().contains(query.toLowerCase())) {
+                        filteredList.add(product);
+                    }
+
                 }
-                // Check if the product type matches the search query
-//                else if (product.getProductType().toLowerCase().contains(query.toLowerCase())) {
-//                    filteredList.add(product);
-//                }
             }
         }
         // Update the adapter with filtered results
@@ -166,11 +168,12 @@ public class ProductListActivity extends AppCompatActivity {
             List<ProductList> filteredList = new ArrayList<>();
 
             for (ProductList product : productList) {
-                if (product.getProductType().toLowerCase().equals(productType.toLowerCase())) {
-                    filteredList.add(product);
+                if (product != null && product.getProductType() != null) {
+                    if (product.getProductType().toLowerCase().equals(productType.toLowerCase())) {
+                        filteredList.add(product);
+                    }
                 }
             }
-
             adapter.filterList(filteredList);
 
             // Show a toast message if no results are found
@@ -178,6 +181,22 @@ public class ProductListActivity extends AppCompatActivity {
                 Toast.makeText(ProductListActivity.this, "No ProductType found", Toast.LENGTH_SHORT).show();
             }
         }
+    @Override
+    @SuppressWarnings("Deprecated")
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // Refresh data when back button is pressed
+      //  fetchDataFromFirebase();
+    }
+
+    private void fetchDataFromFirebase() {
+        // Your existing code to fetch data from Firebase
+        // ...
+
+        // Notify adapter after fetching data
+        adapter.notifyDataSetChanged();
+    }
 
 
 }

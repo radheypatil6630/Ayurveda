@@ -2,6 +2,16 @@
 <resources>
 
 
+        <!-- Base application theme -->
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--            <color name="colorPrimary">#3F51B5</color>-->
+<!--            <color name="colorPrimaryDark">#303F9F</color>-->
+<!--            <color name="colorAccent">#FF4081</color>-->
+<!--    </style>-->
+
+
+        <!-- Other styles and colors you may define -->
+
     <style name="circular">
         <item name="cornerSize">8%</item>
     </style>
