@@ -11,9 +11,9 @@
         android:icon="@drawable/baseline_shopping_cart_24"
         android:title="Order_History" />
 
-    <item
-        android:id="@+id/addproduct"
-        android:title="" />
+<!--    <item-->
+<!--        android:id="@+id/addproduct"-->
+<!--        android:title="" />-->
 
     <item
         android:id="@+id/share"

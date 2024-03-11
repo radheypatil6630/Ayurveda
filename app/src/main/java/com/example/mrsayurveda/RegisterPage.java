@@ -91,13 +91,5 @@ public class RegisterPage extends AppCompatActivity {
         });
 
     }
-//    public void onClearEditText(String email, String password) {
-//        // Clear your EditText in MainActivity here
-//        // For example:
-//        email.setTex("");
-//        password.setText("");
-//
-//        email.setVisibility(View.INVISIBLE);
-//        password.setVisibility(View.INVISIBLE);
-//    }
+
 }

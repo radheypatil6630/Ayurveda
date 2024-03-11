@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -50,8 +50,13 @@
             android:exported="false"/>
         <activity android:name=".OrderHistoryActivity"
             android:exported="false"/>
+        <activity
+            android:name=".DummyUPIPayment"
+            android:exported="false">
+        </activity>
 
-<!--        android:label="@string/app_name"-->
+
+        <!--        android:label="@string/app_name"-->
 <!--        android:theme="@style/AppTheme"-->
     </application>
 

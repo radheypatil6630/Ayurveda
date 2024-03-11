@@ -29,15 +29,15 @@
 
             <ImageView
                 android:id="@+id/profile_img"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="60dp"
                 android:background="@drawable/profile_circle"
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
-                android:layout_marginLeft="28dp"
-                android:backgroundTint="@color/black"
+                android:layout_margin="10dp"
+                android:backgroundTint="#E5E4E2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -55,6 +55,7 @@
                 android:padding="15dp"
                 android:textSize="25dp"
                 android:textStyle="bold"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
@@ -69,24 +70,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="save"
+                android:textColor="@color/white"
                 android:textStyle="italic"
-                android:textSize="25dp"/>
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:textSize="25dp"
+                android:background="@drawable/custom_button_bg"/>
 
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/logoutLAYOUT"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            tools:ignore="MissingConstraints"-->
-<!--            android:orientation="vertical"-->
-<!--            >-->
 
-<!--        </LinearLayout>-->
 
         <Button
             android:id="@+id/logout"
@@ -95,6 +90,8 @@
             android:text="Logout"
             android:textSize="15dp"
             android:textStyle="italic"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.861"

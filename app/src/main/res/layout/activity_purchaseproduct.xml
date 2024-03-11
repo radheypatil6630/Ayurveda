@@ -1,35 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".Purchaseproduct">
+      <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+          android:layout_marginTop="40dp"
+          android:background="@drawable/border_bg">
 
-<TextView
-    android:id="@+id/productPriceTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:src="@drawable/cosmetic"
+            android:background="#B4D9E8"
+            android:padding="5dp"
+            android:layout_margin="2dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+        <TextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@color/black" />
+        <TextView
+            android:id="@+id/productPriceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Price"
+            android:textColor="@color/black"
+            android:textSize="19dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:paddingTop="4dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@color/black" />
+        <TextView
+            android:id="@+id/deliveryDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expected Delivery Date : "
+            android:layout_marginTop="7dp"
+            android:textSize="17dp"
+            android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@color/black" />
+                <TextView
+                    android:id="@+id/freedelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Free delivery"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:textStyle="italic"/>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
         <Button
-            android:id="@+id/buyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buy"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            tools:ignore="MissingConstraints" />
+                android:text="change"
+            android:layout_gravity="right"/>
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Your Name"
+            android:textSize="20dp"
+            android:layout_marginTop="0dp"
+            android:inputType="textPersonName"
+            android:paddingTop="8dp" />
+
+        <EditText
+            android:id="@+id/addressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Your Address"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:inputType="textPostalAddress"
+            android:paddingTop="8dp" />
+        <EditText
+            android:id="@+id/phonenumEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Your Phone Number"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textPersonName"
+            android:paddingTop="8dp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:layout_below="@+id/buyButton"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"
-            tools:ignore="MissingConstraints" />
+            android:textColor="@color/white"
+            android:background="@drawable/button_color"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buy"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button_bg"
+            android:layout_marginTop="8dp" />
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

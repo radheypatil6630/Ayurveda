@@ -27,14 +27,14 @@ public class homeActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-        Toolbar toolbar=findViewById(R.id.toolbar);
-     setSupportActionBar(toolbar);
+//        Toolbar toolbar=findViewById(R.id.toolbar);
+//     setSupportActionBar(toolbar);
 
 
-        getSupportActionBar().setTitle("Ayurveda");
-
-        // Enable the home button for navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Ayurveda");
+//
+//        // Enable the home button for navigation
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(homeActivity.this);
@@ -122,12 +122,12 @@ public class homeActivity extends AppCompatActivity implements BottomNavigationV
         startActivity(intent);
     }
 
-    // Inflate the menu; this adds items to the action bar if it is present.
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
+//    // Inflate the menu; this adds items to the action bar if it is present.
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
 
 
 

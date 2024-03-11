@@ -8,17 +8,30 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="5dp">
-    <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="5dp">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:background="@drawable/pattern"-->
+<!--        android:alpha="0.6"-->
+<!--        >-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/pattern"
-        android:alpha="0.6"
-        >
+        android:layout_marginBottom="15dp">
+
+    <!-- Background Image with Opacity -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/pattern"
+        android:scaleType="centerCrop"
+        android:alpha="0.4"/>
     <ImageView
         android:id="@+id/productImageView"
         android:layout_width="match_parent"
@@ -31,7 +44,7 @@
         android:padding="10dp"
 
         android:src="@drawable/cosmetic" />
-    </LinearLayout>
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +90,11 @@
         android:id="@+id/purchaseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_bg"
         android:layout_below="@+id/productPriceTextView"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16dp"
         android:layout_margin="10dp"
         android:text="Purchase" />
     </LinearLayout>

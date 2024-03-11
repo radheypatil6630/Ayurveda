@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9DC183"
+    android:background="#ADCA97"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <LinearLayout
         android:id="@+id/linear_layout_login"
@@ -89,6 +90,10 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Login"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/custom_button_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.54"

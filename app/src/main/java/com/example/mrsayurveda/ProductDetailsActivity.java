@@ -41,13 +41,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             productPriceTextView.setText("₹"+price);
 
             // Add click listener to purchase button if needed
-//            purchaseButton.setOnClickListener(v -> {
-//                // Handle purchase button click
-//                Intent purchaseIntent = new Intent(ProductDetailsActivity.this, Purchaseproduct.class);
-//                purchaseIntent.putExtra("ProductName", productName);
-//                purchaseIntent.putExtra("price", price);
-//                startActivity(purchaseIntent);
-//            });
+            purchaseButton.setOnClickListener(v -> {
+                // Handle purchase button click
+                Intent purchaseIntent = new Intent(ProductDetailsActivity.this,Purchaseproduct.class);
+                purchaseIntent.putExtra("ProductName", productName);
+                purchaseIntent.putExtra("price", price);
+                purchaseIntent.putExtra("imageUrl", imageUrl);
+                startActivity(purchaseIntent);
+            });
         }
     }
 }
