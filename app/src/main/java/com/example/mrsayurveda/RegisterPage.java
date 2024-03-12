@@ -78,6 +78,7 @@ public class RegisterPage extends AppCompatActivity {
 
                         startActivity(new Intent(RegisterPage.this, MainActivity.class));
                         Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
 
@@ -88,6 +89,7 @@ public class RegisterPage extends AppCompatActivity {
         loginpage.setOnClickListener(view -> {
             Intent stm = new Intent(RegisterPage.this, MainActivity.class);
             startActivity(stm);
+            finish();
         });
 
     }

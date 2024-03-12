@@ -2,40 +2,58 @@ package com.example.mrsayurveda;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView profileImageView;
+    Uri imageuri;
     private EditText profileNameText;
     private EditText email, password;
     private Button save, logout;
-    private FirebaseUser currentUser;
-    private DatabaseReference databaseReference;
+    ProgressDialog pd;
+    StorageReference storageReference;
+    FirebaseAuth mAuth;
+    DatabaseReference databaseReference;
     // Declare imageUri at the class level
-    private Uri imageUri;
+   // private Uri imageUri;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,103 +70,128 @@ public class ProfileActivity extends AppCompatActivity {
         email=findViewById(R.id.Email);
         password=findViewById(R.id.Password);
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            // Retrieve user's first and last name from Firebase
-            String firstName = currentUser.getDisplayName();
-            profileNameText.setText(firstName);
-        }
-//        String[] projection = {ContactsContract.Profile.DISPLAY_NAME};
-//        Cursor cursor = getContentResolver().query(
-//                ContactsContract.Profile.CONTENT_URI,
-//                projection,
-//                null,
-//                null,
-//                null
-//        );
-//
-//        if (cursor != null && cursor.moveToFirst()) {
-//            int displayNameIndex = cursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME);
-//            String displayName = cursor.getString(displayNameIndex);
-//
-//            // Now, 'displayName' contains the user's profile display name
-//            profileNameText.setText(displayName);
-//
-//            cursor.close();
+//        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser != null) {
+//            // Retrieve user's first and last name from Firebase
+//            String firstName = currentUser.getDisplayName();
+//            profileNameText.setText(firstName);
 //        }
+
         // Set a click listener on the ImageView to open the image gallery
-        profileImageView.setOnClickListener(v -> openGallery());
+        mAuth = FirebaseAuth.getInstance();
 
-        save.setOnClickListener(v -> saveToFirebase());
+        //profileImageView.setOnClickListener(v -> openGallery());
+
+       // save.setOnClickListener(v -> uploadImage());
 
 
-        logout.setOnClickListener(v -> {
-            showToastMessage();
 
-            // Clearing email and password or perform any other actions
-            if (email != null && password != null) {
-                email.setText("");
-                password.setText("");
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert=new AlertDialog.Builder(ProfileActivity.this);
+                alert.setMessage("Do you want to change profile image?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent in=new Intent(ProfileActivity.this,ChangeImage.class);
+                        startActivity(in);
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog alertDialog=alert.create();
+                alertDialog.show();
             }
-            // Sign out from Firebase
-             FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(ProfileActivity.this,MainActivity.class));
-
-            finish();
         });
+        logout.setOnClickListener(v -> {
+        showToastMessage();
+
+        // Clearing email and password or perform any other actions
+        if (email != null && password != null) {
+        email.setText("");
+        password.setText("");
+        }
+        // Sign out from Firebase
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(ProfileActivity.this,MainActivity.class));
+
+        finish();
+        });
+
     }
 
     private void showToastMessage() {
         Toast.makeText(this, "Logout successfully", Toast.LENGTH_SHORT).show();
     }
 
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
+//    private void openGallery() {
+//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+//    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            profileImageView.setImageURI(imageUri);
-            Glide.with(this).load(imageUri).into(profileImageView);
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            imageuri = data.getData();
+//            profileImageView.setImageURI(imageuri);
+//            //Glide.with(this).load(imageuri).into(profileImageView);
+//        }
+//    }
 
-    private void saveToFirebase() {
-        if (imageUri != null) {
-            uploadImageToFirebaseStorage(imageUri);
-        } else {
-            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    private void uploadImageToFirebaseStorage(Uri imageUri) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_images")
-                .child(currentUser.getUid() + ".jpg");
+//    private void saveToFirebase() {
+//        if (imageUri != null) {
+//            uploadImageToFirebaseStorage(imageUri);
+//        } else {
+//            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-        storageReference.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                        saveImageUrlAndText(uri.toString());
-                    });
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Image upload failed", Toast.LENGTH_SHORT).show();
-                });
-    }
+//    private void uploadImage() {
+//        if (imageuri == null) {
+//            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+////        pd=new ProgressDialog(this);
+////        pd.setTitle("Uploading File....");
+////        pd.show();
+//            FirebaseUser user = mAuth.getCurrentUser();
+//            String userId = user != null ? user.getUid() : "";
+//
+//            StorageReference storageReference = FirebaseStorage.getInstance().getReference("UserProfileImages/" + userId);
+//
+//            // Download the image into an ImageView
+//            try {
+//                File localFile = File.createTempFile("tempfile", ".jpg");
+//                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                        // Successfully downloaded the image, set it to the ImageView
+//                        DisplayMetrics dm = new DisplayMetrics();
+//                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                        profileImageView.setImageBitmap(bitmap);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // Handle failure to load profile image
+//                    }
+//                });
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-    private void saveImageUrlAndText(String imageUrl) {
-        String text = profileNameText.getText().toString();
-        databaseReference = FirebaseDatabase.getInstance().getReference("profiles").child(currentUser.getUid());
-        Profile profile = new Profile(imageUrl, text);
-        databaseReference.setValue(profile);
-        Toast.makeText(this, "Profile saved to Firebase", Toast.LENGTH_SHORT).show();
-    }
+
+
 
 
 }
-
+//

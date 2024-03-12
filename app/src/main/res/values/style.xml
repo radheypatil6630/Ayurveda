@@ -23,4 +23,12 @@
     <style name="round">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="account_title">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/account_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginVertical">4dp</item>
+    </style>
+
 </resources>

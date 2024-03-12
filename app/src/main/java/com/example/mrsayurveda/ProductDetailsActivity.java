@@ -48,6 +48,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 purchaseIntent.putExtra("price", price);
                 purchaseIntent.putExtra("imageUrl", imageUrl);
                 startActivity(purchaseIntent);
+                finish();
             });
         }
     }

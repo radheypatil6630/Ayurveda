@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -17,9 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mrsayurveda.databinding.HomePageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class homeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 //    private HomePageBinding homePageBinding;
+private EditText email, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,8 @@ public class homeActivity extends AppCompatActivity implements BottomNavigationV
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(homeActivity.this);
+      //  bottomNavigationView.setOnNavigationItemSelectedListener(this::handleBottomNavigation);
+    bottomNavigationView.setOnNavigationItemSelectedListener(homeActivity.this);
 //        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 //            @Override
 //            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -122,14 +126,12 @@ public class homeActivity extends AppCompatActivity implements BottomNavigationV
         startActivity(intent);
     }
 
-//    // Inflate the menu; this adds items to the action bar if it is present.
-//    @Override
+// display at action bar
+//   @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        getMenuInflater().inflate(R.menu.main_menu, menu);
 //        return true;
 //    }
-
-
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -144,31 +146,27 @@ public class homeActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         } else if (id == R.id.home) {
             // Handle home
-             onBackPressed();
-            startActivity(new Intent(homeActivity.this,homeActivity.class));
+            onBackPressed();
+            startActivity(new Intent(homeActivity.this, homeActivity.class));
 
-                        return true;
-
-        } else if (id == R.id.share) {
-            // Handle share click
-            startActivity(new Intent(homeActivity.this,ShareActivity.class));
             return true;
         }
+//       else if (id == R.id.logout) {
+//            // Handle share click
+////            if (email != null && password != null) {
+////                email.setText("");
+////                password.setText("");
+////            }
+//            FirebaseAuth.getInstance().signOut();
+//            startActivity(new Intent(homeActivity.this, MainActivity.class));
+//            Toast.makeText(homeActivity.this, "user logged out", Toast.LENGTH_SHORT).show();
+//
+//            finish();
+//            return true;
+//        }
 
         return false;
     }
 
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }
 
