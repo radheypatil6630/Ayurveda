@@ -125,7 +125,7 @@ public class ChangeImage extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Intent intent = new Intent(ChangeImage.this,ProfileActivity.class);
+                        Intent intent = new Intent(ChangeImage.this,MyAccount.class);
 
                         // Pass the uploaded image URI as an extra to the next activity
                         intent.putExtra("uploadedImageUri", imageuri.toString());

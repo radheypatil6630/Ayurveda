@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterPage extends AppCompatActivity {
     EditText email, password, confirmpassword, firstName, lastName, mobileNo;
@@ -73,8 +75,13 @@ public class RegisterPage extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(RegisterPage.this, "SignUp Unsuccessful, Please Try Again", Toast.LENGTH_SHORT).show();
                     } else {
+                        // Send email verification
+//                        user.sendEmailVerification().addOnCompleteListener(emailVerificationTask -> {
+//                            if (emailVerificationTask.isSuccessful()) {
 
-//                        saveAdditionalUserInfo(task.getResult().getUser().getUid(),fname, lname, mobno,emailid);
+                                // Email sent successfully, you can navigate to the main activity or show a confirmation message
+                        FirebaseUser user = task.getResult().getUser();
+                        saveAdditionalUserInfo(user.getUid(),fname, lname, mobno,emailid);
 
                         startActivity(new Intent(RegisterPage.this, MainActivity.class));
                         Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
@@ -93,5 +100,16 @@ public class RegisterPage extends AppCompatActivity {
         });
 
     }
+
+    private void saveAdditionalUserInfo(String userId, String firstName, String lastName, String phoneNumber, String email) {
+        // Initialize Firebase database reference
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("userInfo");
+        // Create UserInfo object
+        UserInfo userInfo = new UserInfo(email, firstName, lastName, phoneNumber, userId);
+        // Set user info in the database
+        databaseReference.setValue(userInfo);
+        Toast.makeText(this, "user info saved successfully", Toast.LENGTH_SHORT).show();
+    }
+
 
 }

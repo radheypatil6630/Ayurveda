@@ -240,16 +240,7 @@
                                 android:src="@drawable/homeremedies"
                                 app:shapeAppearanceOverlay="@style/circular" />
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/imageView4"
-                                android:layout_width="368dp"
-                                android:layout_height="220dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginRight="10dp"
-                                android:elevation="10dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ayurvedichospital"
-                                app:shapeAppearanceOverlay="@style/circular" />
+
 
                             <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/imageView6"
@@ -274,6 +265,16 @@
                                 android:src="@drawable/homeopathy"
                                 app:shapeAppearanceOverlay="@style/circular" />
 
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="368dp"
+                                android:layout_height="220dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginRight="10dp"
+                                android:elevation="10dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ayurvedichospital"
+                                app:shapeAppearanceOverlay="@style/circular" />
 
                         </LinearLayout>
                     </HorizontalScrollView>

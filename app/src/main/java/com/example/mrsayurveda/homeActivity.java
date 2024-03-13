@@ -137,7 +137,7 @@ private EditText email, password;
         int id = item.getItemId();
         if (id == R.id.profile) {
             // Handle profile click
-            startActivity(new Intent(homeActivity.this,ProfileActivity.class));
+            startActivity(new Intent(homeActivity.this,MyAccount.class));
 
             return true;
         } else if (id == R.id.product_History) {
@@ -151,19 +151,19 @@ private EditText email, password;
 
             return true;
         }
-//       else if (id == R.id.logout) {
-//            // Handle share click
-////            if (email != null && password != null) {
-////                email.setText("");
-////                password.setText("");
-////            }
-//            FirebaseAuth.getInstance().signOut();
-//            startActivity(new Intent(homeActivity.this, MainActivity.class));
-//            Toast.makeText(homeActivity.this, "user logged out", Toast.LENGTH_SHORT).show();
-//
-//            finish();
-//            return true;
-//        }
+       else if (id == R.id.logout) {
+            // Handle share click
+//            if (email != null && password != null) {
+//                email.setText("");
+//                password.setText("");
+//            }
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(homeActivity.this, MainActivity.class));
+            Toast.makeText(homeActivity.this, "user logged out", Toast.LENGTH_SHORT).show();
+
+            finish();
+            return true;
+        }
 
         return false;
     }

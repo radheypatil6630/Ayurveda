@@ -96,15 +96,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
-          android:background="@drawable/border_bg">
+          android:background="@drawable/border_bg"
+          android:padding="7dp">
 
         <Button
+            android:id="@+id/btnchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
                 android:text="change"
             android:layout_gravity="right"/>
         <EditText
-            android:id="@+id/usernameEditText"
+            android:id="@+id/usernameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Name"
@@ -114,7 +116,7 @@
             android:paddingTop="8dp" />
 
         <EditText
-            android:id="@+id/addressEditText"
+            android:id="@+id/addressTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Address"
@@ -123,7 +125,7 @@
             android:inputType="textPostalAddress"
             android:paddingTop="8dp" />
         <EditText
-            android:id="@+id/phonenumEditText"
+            android:id="@+id/phonenumTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Phone Number"
@@ -131,6 +133,13 @@
             android:layout_marginTop="10dp"
             android:inputType="textPersonName"
             android:paddingTop="8dp" />
+          <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="save"
+              android:id="@+id/btnsave"
+              android:background="@drawable/custom_button_bg"
+              android:layout_gravity="right"/>
         </LinearLayout>
 
 

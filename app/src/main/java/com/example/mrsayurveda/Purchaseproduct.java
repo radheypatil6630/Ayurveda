@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.executor.TaskExecutor;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,11 +32,12 @@ import java.util.Locale;
 public class Purchaseproduct extends AppCompatActivity {
 
     private TextView productNameTextView, productPriceTextView, deliveryDateTextView;
-    private EditText usernameEditText, addressEditText,PhoneNumEditText;
-    private Button cancelButton, buyButton;
+    private EditText usernameText, addressText,PhoneNumText;
+    private Button cancelButton, buyButton,btnchage,btnsave;
     private ImageView productImageView;
     private DatabaseReference userRef;
     private FirebaseAuth mAuth;
+    private boolean isEditMode = false;
 
 
     @SuppressLint("MissingInflatedId")
@@ -46,24 +49,30 @@ public class Purchaseproduct extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        // Check if user data is editable (you can add your own logic here)
+        isEditMode = true;
+
         if (currentUser == null) {
             // Handle the case where the user is not logged in
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             finish(); // Close the activity
         }
 
-        userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getEmail().replace(".", ","));
+       // userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getEmail().replace(".", ","));
 
         // Initialize views
         productNameTextView = findViewById(R.id.productNameTextView);
         productPriceTextView = findViewById(R.id.productPriceTextView);
         deliveryDateTextView = findViewById(R.id.deliveryDateTextView);
-        usernameEditText = findViewById(R.id.usernameEditText);
-        addressEditText = findViewById(R.id.addressEditText);
-        PhoneNumEditText = findViewById(R.id.phonenumEditText);
+        usernameText = findViewById(R.id.usernameTextView);
+        addressText = findViewById(R.id.addressTextView);
+        PhoneNumText = findViewById(R.id.phonenumTextView);
         productImageView = findViewById(R.id.productImageView);
         cancelButton = findViewById(R.id.cancelButton);
         buyButton = findViewById(R.id.buyButton);
+        btnchage = findViewById(R.id.btnchange);
+        btnsave = findViewById(R.id.btnsave);
+
 
         // Get product details from the previous activity
         Intent intent = getIntent();
@@ -81,7 +90,7 @@ public class Purchaseproduct extends AppCompatActivity {
         // display delivery date
         displayDeliveryDate();
 
-        // Fetch user-specific data and populate the EditText fields
+        // Fetch user-specific data and populate the TextView fields
         fetchUserData();
 
         // Cancel button click listener
@@ -89,8 +98,8 @@ public class Purchaseproduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate to HomeActivity on cancel button click
-                Intent homeIntent = new Intent(Purchaseproduct.this, homeActivity.class);
-                startActivity(homeIntent);
+                Intent intent = new Intent(Purchaseproduct.this, ProductList.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -99,21 +108,47 @@ public class Purchaseproduct extends AppCompatActivity {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform the purchase and navigate to DummyUPIPaymentActivity
-                // Get the product price
-                String productPrice = getIntent().getStringExtra("price");
-
-                // Create intent for DummyUPIPaymentActivity
-                Intent paymentIntent = new Intent(Purchaseproduct.this, DummyUPIPayment.class);
-
-                // Pass the product price to DummyUPIPaymentActivity
-                paymentIntent.putExtra("productPrice", price);
-
-                // Start DummyUPIPaymentActivity
-                startActivity(paymentIntent);
-                finish(); // Finish the current activity
+                // Perform data validation before proceeding to payment
+                if (isEditMode) {
+                    // Check if any field is empty
+                    if (usernameText.getText().toString().isEmpty() ||
+                            addressText.getText().toString().isEmpty() ||
+                            PhoneNumText.getText().toString().isEmpty()) {
+                        Toast.makeText(Purchaseproduct.this, "Please fill all the details", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Disable editing of edittext fields
+                        disableTextViewFields();
+                        // Proceed to payment activity
+                        goToPaymentActivity(price);
+                        finish();
+                    }
+                } else {
+                    // Proceed to payment activity directly
+                    goToPaymentActivity(price);
+                    finish();
+                }
             }
         });
+        // Save button click listener
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the edited user details
+                saveUserData();
+            }
+        });
+
+        // Change button click listener
+        btnchage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle edit mode
+                isEditMode = !isEditMode;
+                // Enable EditText fields for editing
+                enableEditTextFields(isEditMode);
+            }
+        });
+
 
     }
 
@@ -134,24 +169,30 @@ public class Purchaseproduct extends AppCompatActivity {
     }
 
     private void fetchUserData() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null)
+        {
+            userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid()).child("userInfo");
+
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // User data exists, populate EditText fields
-                    String userName = snapshot.child("name").getValue(String.class);
+                    // User data exists, populate TextView fields
+                    String userName = snapshot.child("firstName").getValue(String.class);
                     String userAddress = snapshot.child("address").getValue(String.class);
                     String userPhoneNumber = snapshot.child("phoneNumber").getValue(String.class);
 
-                    // Populate EditText fields
-                    usernameEditText.setText(userName);
-                    addressEditText.setText(userAddress);
-                    PhoneNumEditText.setText(userPhoneNumber);
+                    // Populate TextView fields
+                    usernameText.setText(userName);
+                    addressText.setText(userAddress);
+                    PhoneNumText.setText(userPhoneNumber);
 
-                    // Disable EditText fields
-                    disableEditTextFields();
+                    // Disable TextView fields if data is editable
+                    enableEditTextFields(false);
                 } else {
                     // User data does not exist (new user), EditText fields remain enabled
+                    enableEditTextFields(true);
                 }
             }
 
@@ -161,12 +202,63 @@ public class Purchaseproduct extends AppCompatActivity {
                 Toast.makeText(Purchaseproduct.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
             }
         });
+    } else {
+            // Handle the case where the user is not logged in
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            finish(); // Close the activity
+        }
     }
 
-    private void disableEditTextFields() {
-        // Disable EditText fields after fetching user data
-        usernameEditText.setEnabled(false);
-        addressEditText.setEnabled(false);
-        PhoneNumEditText.setEnabled(false);
+    private void disableTextViewFields() {
+        // Disable TextView fields after fetching user data
+        usernameText.setEnabled(false);
+        addressText.setEnabled(false);
+        PhoneNumText.setEnabled(false);
+    }
+    private void goToPaymentActivity(String productPrice) {
+        // Create intent for DummyUPIPaymentActivity
+        Intent paymentIntent = new Intent(Purchaseproduct.this, DummyUPIPayment.class);
+
+        // Pass the product price to DummyUPIPaymentActivity
+        paymentIntent.putExtra("productPrice", productPrice);
+
+        // Start DummyUPIPaymentActivity
+        startActivity(paymentIntent);
+        finish(); // Finish the current activity
+    }
+    private void enableEditTextFields(boolean enable) {
+        // Enable or disable EditText fields based on the given parameter
+        usernameText.setEnabled(enable);
+        addressText.setEnabled(enable);
+        PhoneNumText.setEnabled(enable);
+        // Change visibility of buttons accordingly
+        if (enable) {
+            btnchage.setVisibility(View.GONE);
+            btnsave.setVisibility(View.VISIBLE);
+        } else {
+            btnchage.setVisibility(View.VISIBLE);
+            btnsave.setVisibility(View.GONE);
+        }
+    }
+
+    private void saveUserData() {
+        // Check if EditText fields are empty
+        if (usernameText.getText().toString().isEmpty() ||
+                addressText.getText().toString().isEmpty() ||
+                PhoneNumText.getText().toString().isEmpty()) {
+            Toast.makeText(Purchaseproduct.this, "Please fill all details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Save user details to the database
+        userRef.child("firstName").setValue(usernameText.getText().toString());
+        userRef.child("address").setValue(addressText.getText().toString());
+        userRef.child("phoneNumber").setValue(PhoneNumText.getText().toString());
+
+        // Disable EditText fields after saving
+        enableEditTextFields(false);
+
+        // Show a toast message indicating successful save
+        Toast.makeText(Purchaseproduct.this, "User details saved successfully", Toast.LENGTH_SHORT).show();
     }
 }

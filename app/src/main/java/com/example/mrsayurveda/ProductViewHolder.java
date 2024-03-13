@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.ViewHolder>{
     private List<ProductList> productList;
+    private List<ProductList> originalList;
 
     private OnItemClickListener onItemClickListener;
     public interface OnItemClickListener {
@@ -22,7 +24,8 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
     public ProductViewHolder(List<ProductList> productList, OnItemClickListener onItemClickListener) {
 
         this.productList = productList;
-        //this.onItemClickListener = this.onItemClickListener;
+        this.originalList = new ArrayList<>(productList); // Initialize originalProductList
+        this.onItemClickListener = onItemClickListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -40,7 +43,7 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductList product = productList.get(position);
         if (product != null) {
-            holder.setDetails(product.getProductName(), product.getImageUrl(),"₹"+ product.getPrice());
+            holder.setDetails(product.getProductName(), product.getImageUrl(), "₹" + product.getPrice());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,10 +84,38 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
 
     }
 
-    public void filterList(List<ProductList> filteredList) {
-            productList.clear();
-            productList.addAll(filteredList);
-            notifyDataSetChanged();
+    // Filter method to filter the product list
+    public void filter(String query) {
+        productList.clear();
+        if (query.isEmpty()) {
+            // If the query is empty, display original list
+            productList.addAll(originalList);
+        } else {
+            // Iterate through the original list and add matching items to the filtered list
+            for (ProductList product : originalList) {
+                if (product.getProductName().toLowerCase().contains(query.toLowerCase()) ||
+                        product.getProductType().toLowerCase().contains(query.toLowerCase())) {
+                    productList.add(product);
+                }
+            }
+        }
+        notifyDataSetChanged(); // Notify RecyclerView about the changes
+    }
+    // Method to set original product list
+    public void setOriginalList(List<ProductList> originalList) {
+        this.originalList = new ArrayList<>(originalList);
+        this.productList = new ArrayList<>(originalList);
+    }
 
+    // Method to filter list based on search query
+    public void filterList(List<ProductList> filteredList) {
+        productList = filteredList;
+        notifyDataSetChanged();
+    }
+
+    // Method to reset list to original
+    public void resetList() {
+        productList = new ArrayList<>(originalList);
+        notifyDataSetChanged();
     }
 }

@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -35,6 +36,17 @@ public class ProductListActivity extends AppCompatActivity {
     private ProductViewHolder adapter;
 
     private EditText searchEditText;
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +112,10 @@ public class ProductListActivity extends AppCompatActivity {
 
 
                 adapter.notifyDataSetChanged();
-
+                // Check if productList is empty after populating it
+                if (productList.isEmpty()) {
+                    Toast.makeText(ProductListActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -121,49 +136,83 @@ public class ProductListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+//        searchEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                // Filter products based on search query as the user types
+//                filterProducts(editable.toString());
+//            }
+//        });
+
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString().toLowerCase();
+                filter(query);
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                // Filter products based on search query as the user types
-                filterProducts(editable.toString());
+            public void afterTextChanged(Editable s) {
+                // Not needed for this implementation
             }
         });
+
+
     }
 
-    private void filterProducts(String query) {
+    private void filter(String query) {
         List<ProductList> filteredList = new ArrayList<>();
 
-        if (query.isEmpty()) {
-            // If the search query is empty, display the entire product list
-            filteredList.addAll(productList);
-        } else {
-            for (ProductList product : productList) {
-                if (product != null && product.getProductType() != null) {
-                    // String productName = product.getProductName();
-                    if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase()) || product.getProductType().toLowerCase().contains(query.toLowerCase())) {
-                        filteredList.add(product);
-                    }
-
-                }
+        for (ProductList product : productList) {
+            if (product.getProductName().toLowerCase().contains(query) ||
+                    product.getProductType().toLowerCase().contains(query)) {
+                filteredList.add(product);
             }
         }
-        // Update the adapter with filtered results
-        adapter.filterList(filteredList);
 
-        // Show a toast message if no results are found
-        if (filteredList.isEmpty() && !query.isEmpty()) {
-            Toast.makeText(ProductListActivity.this, "No product found", Toast.LENGTH_SHORT).show();
-        }
+        // Update RecyclerView with filtered list
+        adapter.filterList(filteredList);
     }
+
+
+//    private void filterProducts(String query) {
+//        List<ProductList> filteredList = new ArrayList<>();
+//
+//        if (query.isEmpty()) {
+//            filteredList.addAll(productList);
+//        } else {
+//            for (ProductList product : productList) {
+//                if (product != null && product.getProductType() != null) {
+//                    // String productName = product.getProductName();
+//                    if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase()) || product.getProductType().toLowerCase().contains(query.toLowerCase())) {
+//                        filteredList.add(product);
+//                    }
+//
+//                }
+//            }
+//        }
+//        // Update the adapter with filtered results
+//        adapter.filterList(filteredList);
+//
+//        // Show a toast message if no results are found
+//        if (filteredList.isEmpty() && !query.isEmpty()) {
+//            Toast.makeText(ProductListActivity.this, "No product found", Toast.LENGTH_SHORT).show();
+//        }
+//    }
         private void showProductsByType (String productType){
             List<ProductList> filteredList = new ArrayList<>();
 
