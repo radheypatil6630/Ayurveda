@@ -10,7 +10,11 @@ public class ProductList {
     // ... (existing getters and setters)
 
 
-
+    public ProductList(String productName, String imageUrl, String price) {
+        this.ProductName = productName;
+        this.imageUrl = imageUrl;
+        this.price = price;
+    }
     public ProductList() {
         // Required default constructor for Firebase
     }

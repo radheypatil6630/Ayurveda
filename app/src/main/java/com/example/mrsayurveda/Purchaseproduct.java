@@ -97,8 +97,8 @@ public class Purchaseproduct extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to HomeActivity on cancel button click
-                Intent intent = new Intent(Purchaseproduct.this, ProductList.class);
+                // Navigate to ProductListActivity on cancel button click
+                Intent intent = new Intent(Purchaseproduct.this, ProductListActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -119,12 +119,12 @@ public class Purchaseproduct extends AppCompatActivity {
                         // Disable editing of edittext fields
                         disableTextViewFields();
                         // Proceed to payment activity
-                        goToPaymentActivity(price);
+                        goToPaymentActivity(price,productName,imageUrl);
                         finish();
                     }
                 } else {
                     // Proceed to payment activity directly
-                    goToPaymentActivity(price);
+                    goToPaymentActivity(price,productName,imageUrl);
                     finish();
                 }
             }
@@ -215,17 +215,16 @@ public class Purchaseproduct extends AppCompatActivity {
         addressText.setEnabled(false);
         PhoneNumText.setEnabled(false);
     }
-    private void goToPaymentActivity(String productPrice) {
-        // Create intent for DummyUPIPaymentActivity
-        Intent paymentIntent = new Intent(Purchaseproduct.this, DummyUPIPayment.class);
 
-        // Pass the product price to DummyUPIPaymentActivity
-        paymentIntent.putExtra("productPrice", productPrice);
+private void goToPaymentActivity(String productPrice, String productName, String imageUrl) {
+    Intent paymentIntent = new Intent(Purchaseproduct.this, DummyUPIPayment.class);
+    paymentIntent.putExtra("productName", productName);
+    paymentIntent.putExtra("imageUrl", imageUrl);
+    paymentIntent.putExtra("productPrice", productPrice);
+    startActivity(paymentIntent);
+    finish(); // Finish the current activity
+}
 
-        // Start DummyUPIPaymentActivity
-        startActivity(paymentIntent);
-        finish(); // Finish the current activity
-    }
     private void enableEditTextFields(boolean enable) {
         // Enable or disable EditText fields based on the given parameter
         usernameText.setEnabled(enable);

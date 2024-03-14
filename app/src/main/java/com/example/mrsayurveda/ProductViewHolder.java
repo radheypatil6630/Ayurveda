@@ -1,5 +1,6 @@
 package com.example.mrsayurveda;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import java.util.List;
 public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.ViewHolder>{
     private List<ProductList> productList;
     private List<ProductList> originalList;
-
     private OnItemClickListener onItemClickListener;
+
     public interface OnItemClickListener {
         void onItemClick(ProductList product, int position);
     }
@@ -32,16 +33,35 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
         this.onItemClickListener = listener;
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleview, parent, false);
-      return new ViewHolder(view);
+//    @NonNull
+//    @Override
+//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleview, parent, false);
+//      return new ViewHolder(view);
+//    }
+
+@NonNull
+@Override
+public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    // Check the context to determine which layout to inflate
+    Context context = parent.getContext();
+    LayoutInflater inflater = LayoutInflater.from(context);
+    View view;
+
+    // Inflate the appropriate layout based on the context
+    if (context instanceof OrderHistoryActivity) {
+        view = inflater.inflate(R.layout.orderrecycleview, parent, false);
+    } else {
+        view = inflater.inflate(R.layout.activity_recycleview, parent, false);
     }
+    return new ViewHolder(view);
+}
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductList product = productList.get(position);
+
         if (product != null) {
             holder.setDetails(product.getProductName(), product.getImageUrl(), "₹" + product.getPrice());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,13 +93,30 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
             delivery = itemView.findViewById(R.id.delivery);
         }
 
-        public void setDetails(String productName, String imageUrl, String price) {
-            // Set the data to the views
-            Picasso.get().load(imageUrl).into(productImage);
-            this.productName.setText(productName);
-            this.productPrice.setText(price);
-            delivery.setText("Free delivery");
+//        public void setDetails(String productName, String imageUrl, String price) {
+//            // Set the data to the views
+//            Picasso.get().load(imageUrl).into(productImage);
+//            this.productName.setText(productName);
+//            this.productPrice.setText(price);
+//            delivery.setText("Free delivery");
+//        }
+
+        // Inside ProductViewHolder.java
+        // Inside ProductViewHolder.java
+        public void setDetails(String ProductName, String imageUrl, String price) {
+            // Check if productImageView is null
+            if (productImage != null) {
+                // Load image into ImageView
+                Picasso.get().load(imageUrl).into(productImage);
+            }
+
+            // Set product name and price
+            if (productName != null && productPrice != null) {
+             productName.setText(ProductName);
+                productPrice.setText(price);
+            }
         }
+
 
 
     }

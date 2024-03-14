@@ -36,7 +36,7 @@
         <activity
             android:name=".ProductListActivity"
             android:exported="false"
-            android:label="Display Products"
+            android:label="Product-List"
             android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
         <activity
             android:name=".MainActivity"
