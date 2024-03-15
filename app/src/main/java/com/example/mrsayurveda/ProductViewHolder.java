@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.ViewHolder>{
     private List<ProductList> productList;
     private List<ProductList> originalList;
+//    private String deliveryDate;
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
@@ -23,46 +25,47 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
     }
 
     public ProductViewHolder(List<ProductList> productList, OnItemClickListener onItemClickListener) {
-
         this.productList = productList;
         this.originalList = new ArrayList<>(productList); // Initialize originalProductList
+      //  this.deliveryDate = deliveryDate; // Set the delivery date
         this.onItemClickListener = onItemClickListener;
     }
+
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
-//    @NonNull
-//    @Override
-//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleview, parent, false);
-//      return new ViewHolder(view);
-//    }
-
-@NonNull
-@Override
-public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    // Check the context to determine which layout to inflate
-    Context context = parent.getContext();
-    LayoutInflater inflater = LayoutInflater.from(context);
-    View view;
-
-    // Inflate the appropriate layout based on the context
-    if (context instanceof OrderHistoryActivity) {
-        view = inflater.inflate(R.layout.orderrecycleview, parent, false);
-    } else {
-        view = inflater.inflate(R.layout.activity_recycleview, parent, false);
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleview, parent, false);
+      return new ViewHolder(view);
     }
-    return new ViewHolder(view);
-}
+
+//@NonNull
+//@Override
+//public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//    // Check the context to determine which layout to inflate
+//    Context context = parent.getContext();
+//    LayoutInflater inflater = LayoutInflater.from(context);
+//    View view;
+//
+//    // Inflate the appropriate layout based on the context
+//    if (context instanceof OrderHistoryActivity) {
+//        view = inflater.inflate(R.layout.orderrecycleview, parent, false);
+//    } else {
+//        view = inflater.inflate(R.layout.activity_recycleview, parent, false);
+//    }
+//    return new ViewHolder(view);
+//}
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductList product = productList.get(position);
 
-        if (product != null) {
+      if (product != null) { // , product.getDeliveryDate()
             holder.setDetails(product.getProductName(), product.getImageUrl(), "₹" + product.getPrice());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,7 +85,8 @@ public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage;
-        private TextView productName, productPrice, delivery;
+        private TextView productName, productPrice, delivery;//, deliveryDateTextView;
+       // private WindowDecorActionBar.TabImpl deliveryDateTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +95,7 @@ public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
             delivery = itemView.findViewById(R.id.delivery);
+       //     deliveryDateTextView=itemView.findViewById(R.id.deliveryDateTextView);
         }
 
 //        public void setDetails(String productName, String imageUrl, String price) {
@@ -103,7 +108,7 @@ public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // Inside ProductViewHolder.java
         // Inside ProductViewHolder.java
-        public void setDetails(String ProductName, String imageUrl, String price) {
+        public void setDetails(String ProductName, String imageUrl, String price) {  //,String deliveryDate
             // Check if productImageView is null
             if (productImage != null) {
                 // Load image into ImageView
@@ -114,6 +119,7 @@ public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (productName != null && productPrice != null) {
              productName.setText(ProductName);
                 productPrice.setText(price);
+             //   this.deliveryDateTextView.setText(deliveryDate);
             }
         }
 

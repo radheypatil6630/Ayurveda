@@ -98,7 +98,7 @@ public class Purchaseproduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate to ProductListActivity on cancel button click
-                Intent intent = new Intent(Purchaseproduct.this, ProductListActivity.class);
+                Intent intent = new Intent(Purchaseproduct.this,homeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -111,12 +111,17 @@ public class Purchaseproduct extends AppCompatActivity {
                 // Perform data validation before proceeding to payment
                 if (isEditMode) {
                     // Check if any field is empty
-                    if (usernameText.getText().toString().isEmpty() ||
-                            addressText.getText().toString().isEmpty() ||
+                    if (usernameText.getText().toString().isEmpty() &&
+                            addressText.getText().toString().isEmpty() &&
                             PhoneNumText.getText().toString().isEmpty()) {
                         Toast.makeText(Purchaseproduct.this, "Please fill all the details", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Disable editing of edittext fields
+                        String phoneNumber = PhoneNumText.getText().toString();
+                        if (phoneNumber.length() != 10) {
+                            PhoneNumText.setError("Phone number must be 10 digits long");
+                            PhoneNumText.requestFocus();
+                            return;}
+                            // Disable editing of edittext fields
                         disableTextViewFields();
                         // Proceed to payment activity
                         goToPaymentActivity(price,productName,imageUrl);
@@ -218,9 +223,12 @@ public class Purchaseproduct extends AppCompatActivity {
 
 private void goToPaymentActivity(String productPrice, String productName, String imageUrl) {
     Intent paymentIntent = new Intent(Purchaseproduct.this, DummyUPIPayment.class);
-    paymentIntent.putExtra("productName", productName);
+    paymentIntent.putExtra("ProductName", productName);
     paymentIntent.putExtra("imageUrl", imageUrl);
     paymentIntent.putExtra("productPrice", productPrice);
+    String deliveryDate = deliveryDateTextView.getText().toString();
+    paymentIntent.putExtra("deliverydate", deliveryDate);
+
     startActivity(paymentIntent);
     finish(); // Finish the current activity
 }
@@ -242,8 +250,8 @@ private void goToPaymentActivity(String productPrice, String productName, String
 
     private void saveUserData() {
         // Check if EditText fields are empty
-        if (usernameText.getText().toString().isEmpty() ||
-                addressText.getText().toString().isEmpty() ||
+        if (usernameText.getText().toString().isEmpty() &&
+                addressText.getText().toString().isEmpty()&&
                 PhoneNumText.getText().toString().isEmpty()) {
             Toast.makeText(Purchaseproduct.this, "Please fill all details", Toast.LENGTH_SHORT).show();
             return;

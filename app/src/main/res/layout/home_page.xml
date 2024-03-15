@@ -294,7 +294,10 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/main_menu"
-            android:background="#ED9E6A"/>
+            android:background="@color/actionBarColor"
+            app:itemIconTint="@drawable/bottom_nav_color_state"
+            app:itemTextColor="@drawable/bottom_nav_color_state"
+            app:itemRippleColor="@color/ripple_color"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

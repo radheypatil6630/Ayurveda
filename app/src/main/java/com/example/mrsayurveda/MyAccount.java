@@ -1,6 +1,11 @@
 package com.example.mrsayurveda;
 
-import android.annotation.SuppressLint;
+import static android.app.PendingIntent.getActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -9,18 +14,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,13 +43,13 @@ import java.util.Calendar;
 public class MyAccount extends AppCompatActivity {
 
 
-    Button dobPicker ,saveButton;
+    Button dobPicker , expiryPicker,saveButton;
     ImageView profileImage;
     private String selectedDates="1/02/2024";
 
     String UserId,selectedCountry;
-    EditText acc_addr_edt,acc_phone_edt,acc_name_edt,acc_gender_edt;
-    EditText acc_city_edt,acc_state_edt,acc_nationality_edt,acc_issuecountry_edt;
+    EditText acc_email_edt,acc_phone_edt,acc_name_edt,acc_gender_edt,acc_addr_edt;
+    EditText acc_city_edt,acc_state_edt,acc_nationality_edt;
     private DatabaseReference databaseReference;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -61,7 +62,6 @@ public class MyAccount extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +71,7 @@ public class MyAccount extends AppCompatActivity {
         acc_city_edt=findViewById(R.id.acc_city_edt);
         acc_state_edt=findViewById(R.id.acc_state_edt);
         acc_nationality_edt=findViewById(R.id.acc_nationality_edt);
-
+        acc_addr_edt=findViewById(R.id.acc_address);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -84,16 +84,16 @@ public class MyAccount extends AppCompatActivity {
         saveButton=findViewById(R.id.saveData);
         acc_phone_edt = findViewById(R.id.acc_phone_edt);
         acc_name_edt = findViewById(R.id.acc_name_edt);
-        acc_addr_edt=findViewById(R.id.acc_address);
+        acc_email_edt=findViewById(R.id.acc_email);
         profileImage=findViewById(R.id.profileImage);
         dobPicker = findViewById(R.id.acc_dob_edt);
+
         dobPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(dobPicker);
             }
         });
-
 
 
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -122,12 +122,11 @@ public class MyAccount extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserInfo userInfo=snapshot.getValue(UserInfo.class);
-                if (userInfo != null) {
-                    acc_name_edt.setText(userInfo.getFirstName());
-                    acc_addr_edt.setText(userInfo.getAddress());
-                    acc_phone_edt.setText(userInfo.getPhoneNumber());
+                acc_name_edt.setText(userInfo.getFirstName());
+                acc_email_edt.setText(userInfo.getEmail());
+                acc_phone_edt.setText(userInfo.getPhoneNumber());
 
-                if(userInfo.getUserId()!= null && !userInfo.getUserId().equals(""))
+                if(!userInfo.getGender().equals(""))
                     acc_gender_edt.setText(userInfo.getGender());
                 if(!userInfo.getCity().equals(""))
                     acc_city_edt.setText(userInfo.getCity());
@@ -135,12 +134,11 @@ public class MyAccount extends AppCompatActivity {
                     acc_state_edt.setText(userInfo.getState());
                 if(!userInfo.getNationality().equals(""))
                     acc_nationality_edt.setText(userInfo.getNationality());
-
+                if (!userInfo.getAddress().equals("")) // Retrieve and set the address
+                    acc_addr_edt.setText(userInfo.getAddress());
                 if(!userInfo.getDob().equals(""))
                     dobPicker.setText(userInfo.getDob());
-                }   else { // Handle the case where userInfo is null
-                    Log.e("MyAccount", "UserInfo is null");
-                }
+
 
             }
 
@@ -173,13 +171,48 @@ public class MyAccount extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
+//
+//                UserInfo userInfo = snapshot.getValue(UserInfo.class);
+//                selectedCountry = userInfo.getSelectedCountry();
+//                if(selectedCountry ==null)
+//                {
+//                    selectedCountry = "India";
+//
+//                }else
+//                {
+//                    selectedCountry = userInfo.getSelectedCountry();
+//
+//                }
+////                Toast.makeText(MyAccount.this, "country "+ selectedCountry, Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
         saveButton.setOnClickListener(v->{
+            // Get the phone number from the EditText
+            String phoneNumber = acc_phone_edt.getText().toString();
+
+            // Check if the phone number is exactly 10 digits long
+            if (phoneNumber.length() != 10) {
+                acc_phone_edt.setError("Phone number must be 10 digits long");
+                acc_phone_edt.requestFocus();
+                return; // Return from the method without proceeding further
+            }
+
 
             UserInfo info=new UserInfo(FirebaseAuth.getInstance().getUid(),acc_name_edt.getText().toString(),acc_phone_edt.getText().toString()
-                    ,acc_addr_edt.getText().toString(),acc_gender_edt.getText().toString(),acc_city_edt.getText().toString()
+                    ,acc_email_edt.getText().toString(),acc_gender_edt.getText().toString(),acc_city_edt.getText().toString()
                     ,acc_state_edt.getText().toString(),acc_nationality_edt.getText().toString()
-                    ,dobPicker.getText().toString());
+                    ,acc_addr_edt.getText().toString(),dobPicker.getText().toString());
 
             databaseReference.setValue(info);
             Toast.makeText(this, "Data saved Successfully", Toast.LENGTH_SHORT).show();

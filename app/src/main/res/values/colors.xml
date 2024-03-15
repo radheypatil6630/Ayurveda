@@ -13,4 +13,8 @@
     <color name="subtext">#202020</color>
     <color name="account_title">#007359</color>
     <color name="actionBarColor">#ED9E6A</color>
+    <color name="ripple_color">#FEDB71</color>
+    <color name="btn_bg">#FEDB71</color>
+    <!--    <color name="btn_bg">#FEF771</color>-->
+    <color name="border">#EEEEEE</color>
 </resources>

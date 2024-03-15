@@ -6,12 +6,13 @@ public class ProductList {
     private String ProductName;
     private String description;
     private String productType;
+  //  private String deliveryDate;
 
     // ... (existing getters and setters)
 
 
-    public ProductList(String productName, String imageUrl, String price) {
-        this.ProductName = productName;
+    public ProductList(String ProductName, String imageUrl, String price) {
+        this.ProductName = ProductName;
         this.imageUrl = imageUrl;
         this.price = price;
     }
@@ -38,8 +39,8 @@ public class ProductList {
         return ProductName;
     }
 
-    public void setProductName(String productName) {
-        this.ProductName = productName;
+    public void setProductName(String ProductName) {
+        this.ProductName = ProductName;
     }
     public String getDescription() {
         return description;
@@ -53,4 +54,13 @@ public class ProductList {
     public void setProductType(String productType) {
         this.productType = productType;
     }
+
+
+//    public String getDeliveryDate() {
+//        return deliveryDate;
+//    }
+//
+//    public void setDeliveryDate(String deliveryDate) {
+//        this.deliveryDate = deliveryDate;
+//    }
 }

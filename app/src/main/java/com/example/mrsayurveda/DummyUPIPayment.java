@@ -32,6 +32,7 @@ public class DummyUPIPayment extends AppCompatActivity {
     String imageUrl;
     String productName;
     String price;
+    String deliveryDateTextView;
 
     private final StringBuilder passwordBuilder = new StringBuilder();
 
@@ -57,8 +58,9 @@ public class DummyUPIPayment extends AppCompatActivity {
 
         // Retrieve the product details from the Intent extras
          imageUrl = getIntent().getStringExtra("imageUrl");
-         productName = getIntent().getStringExtra("productName");
+         productName = getIntent().getStringExtra("ProductName");
          price = getIntent().getStringExtra("productPrice");
+         deliveryDateTextView = getIntent().getStringExtra("deliverydate");
         totalAmount.setText("₹ "+price);
 
         // Disable soft keyboard for EditText
@@ -135,7 +137,7 @@ public class DummyUPIPayment extends AppCompatActivity {
                     // Add the paid product to Firebase under the user's ID
                     DatabaseReference userOrderedProductsRef = databaseReference.child(userId);
                     String orderId = userOrderedProductsRef.push().getKey();
-                    ProductList orderedProduct = new ProductList(productName, imageUrl, price);
+                    OrderedProduct orderedProduct = new OrderedProduct(productName, imageUrl, price, deliveryDateTextView);
                     if (orderId != null) {
                         userOrderedProductsRef.child(orderId).setValue(orderedProduct);
                     } else {
@@ -143,6 +145,8 @@ public class DummyUPIPayment extends AppCompatActivity {
                     }
                 // Navigate to the order history activity
                 Intent intent = new Intent(DummyUPIPayment.this, OrderHistoryActivity.class);
+
+                //    intent.putExtra("deliverydate", deliveryDateTextView);
                 startActivity(intent);
                 finish();
                 } else {

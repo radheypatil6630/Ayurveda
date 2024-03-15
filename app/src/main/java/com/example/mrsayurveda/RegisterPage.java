@@ -45,7 +45,10 @@ public class RegisterPage extends AppCompatActivity {
             String confirmpass = confirmpassword.getText().toString();
             String fname = firstName.getText().toString();
             String lname = lastName.getText().toString();
+            // Get the phone number from the EditText
             String mobno = mobileNo.getText().toString();
+
+
             if (fname.isEmpty()) {
                 firstName.setError("Please enter first name");
                 firstName.requestFocus();
@@ -54,6 +57,12 @@ public class RegisterPage extends AppCompatActivity {
                 lastName.requestFocus();
             } else if (mobno.isEmpty()) {
                 mobileNo.setError("Please enter mobile number");
+                // Check if the phone number is exactly 10 digits long
+                if (mobno.length() != 10) {
+                    mobileNo.setError("Phone number must be 10 digits long");
+                    mobileNo.requestFocus();
+                    return; // Return from the method without proceeding further
+                }
                 mobileNo.requestFocus();
             } else if (emailid.isEmpty() && pass.isEmpty() && confirmpass.isEmpty() && fname.isEmpty() && lname.isEmpty() && mobno.isEmpty()) {
                 email.setError("Please enter email id");

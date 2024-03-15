@@ -1,18 +1,19 @@
 package com.example.mrsayurveda;
 
+
 import android.util.Log;
 
 public class UserInfo {
-    public String userId,firstName,lastName, phoneNumber, address;
+    public String userId,firstName,lastName, phoneNumber, email,address;
     public String gender="",city="",state="",nationality="";
     String panExpiry="",dob="";
 
     public UserInfo() {
         //Default Constructor
     }
-    public UserInfo(String address, String firstName, String lastName, String phoneNumber, String userId ) {
-        Log.d("UserInfo", "UserInfo: " + userId + " " + firstName + " " + lastName + " " + phoneNumber + " " + address);
-        this.address = address;
+    public UserInfo(String email, String firstName, String lastName, String phoneNumber,String userId ) {
+        Log.d("UserInfo", "UserInfo: " + userId + " " + firstName + " " + lastName + " " + phoneNumber + " " + email);
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -20,23 +21,22 @@ public class UserInfo {
 
     }
 
-    public UserInfo(String userId, String firstName, String phoneNumber, String address,
+    public UserInfo(String userId,String firstName, String phoneNumber, String email,
                     String gender, String city, String state, String nationality,
-                     String dob) {
-        // Your existing constructor code...
+                    String address,String dob) {
         this.userId=userId;
         this.firstName = firstName;
         this.phoneNumber = phoneNumber;
-        this.address = address;
+        this.email = email;
         this.gender = gender;
         this.city = city;
         this.state = state;
         this.nationality = nationality;
+        this.address = address;
 
         this.dob=dob;
 
     }
-
 
 
 
@@ -80,6 +80,14 @@ public class UserInfo {
         this.nationality = nationality;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
 
     public String getUserId() {
@@ -114,11 +122,11 @@ public class UserInfo {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

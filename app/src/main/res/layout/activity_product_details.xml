@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/search_bg"
-        android:layout_margin="7dp">
+        android:layout_margin="4dp">
 <!--    android:src="@drawable/placeholder_image"-->
 
         <TextView

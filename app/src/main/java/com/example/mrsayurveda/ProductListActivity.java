@@ -76,9 +76,15 @@ public class ProductListActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
-        // Set the reference to the specific category in the database
+//        if (category != null) {
+//            databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
+//        } else {
+//            // Handle the case when category is null
+//            Log.e("ProductListActivity", "Category is null");
+//            return; // Add this line to prevent further execution
+//        }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
+       databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,6 +140,7 @@ public class ProductListActivity extends AppCompatActivity {
                 intent.putExtra("ProductDescription", product.getDescription()); // Add description logic
                 intent.putExtra("price", product.getPrice());
                 startActivity(intent);
+                finish();
             }
         });
 //        searchEditText.addTextChangedListener(new TextWatcher() {

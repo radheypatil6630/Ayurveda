@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,10 +43,14 @@ import java.util.Locale;
 public class OrderHistoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    ProductViewHolder adapter;
-    List<ProductList> orderedProductsList;
+//    ProductViewHolder adapter;
+//    List<ProductList> orderedProductsList;
+    OrderViewHolder adapter;
+    List<OrderedProduct> orderedProductsList;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    private String deliveryDate;
+
 
 
 
@@ -73,6 +80,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         }
         getSupportActionBar().setTitle("Product Cart");
 
+      //  deliveryDate = getIntent().getStringExtra("deliverydate");
+
+
         // Initialize RecyclerView and product list
         recyclerView = findViewById(R.id.orderrecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -87,50 +97,70 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         // Load ordered products
         loadOrderedProducts();
+
     }
 
     private void loadOrderedProducts() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userId = user.getUid();
+        if (user != null) {
+            String userId = user.getUid();
+//            DatabaseReference userRef = databaseReference.child(userId);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("orderedproduct").child(userId);
 
-        DatabaseReference userRef = databaseReference.child(userId);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    orderedProductsList.clear();
+                    for (DataSnapshot orderIdSnapshot : dataSnapshot.getChildren()) {
+                      //  for(DataSnapshot productId: orderIdSnapshot.getChildren()) {
+                            String productName = orderIdSnapshot.child("productName").getValue(String.class);
+                            String imageUrl = orderIdSnapshot.child("imageUrl").getValue(String.class);
+                            String price = orderIdSnapshot.child("productPrice").getValue(String.class);
+                        String deliveryDate = orderIdSnapshot.child("deliveryDate").getValue(String.class);
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                orderedProductsList.clear();
-                for (DataSnapshot orderIdSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot productSnapshot : orderIdSnapshot.getChildren()) {
-                        String productName = productSnapshot.child("productName").getValue(String.class);
-                        String imageUrl = productSnapshot.child("imageUrl").getValue(String.class);
-                        String price = productSnapshot.child("price").getValue(String.class);
-
-                        // Create a ProductList object and add it to the list
-                        ProductList orderedProduct = new ProductList(productName, imageUrl, price);
+                        OrderedProduct orderedProduct = new OrderedProduct(productName, imageUrl, price, deliveryDate);
                         orderedProductsList.add(orderedProduct);
+
+                            // Create a ProductList object and add it to the list
+//                        ProductList product = new ProductList();
+//                        product.setProductName(productName);
+//                        product.setImageUrl(imageUrl);
+//                        product.setPrice(price);
+//                        product.setDeliveryDate(deliveryDate);
+
+//                        product.setDescription(description);
+//                        product.setProductType(productType);
+
+//                        orderedProductsList.add(product);
+                       // }
+                    }
+
+                    // Initialize the adapter if it's null
+                 //   Log.d("values1", "onDataChange: "+orderedProductsList);
+                    if (adapter == null) {
+                        adapter = new OrderViewHolder(orderedProductsList);
+                        recyclerView.setAdapter(adapter);
+//                        adapter = new OrderViewHolder(orderedProductsList ,new ProductViewHolder.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(ProductList product, int position) {
+//                                // Handle item click if needed
+//                            }
+//                        });
+                      //  recyclerView.setAdapter(adapter);
+                    } else {
+                        // Notify the adapter that the data set has changed
+                        adapter.notifyDataSetChanged();
                     }
                 }
-                // Initialize the adapter if it's null
-                if (adapter == null) {
-                    adapter = new ProductViewHolder(orderedProductsList, new ProductViewHolder.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(ProductList product, int position) {
-                            // Handle item click if needed
-                        }
-                    });
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    // Notify the adapter that the data set has changed
-                    adapter.notifyDataSetChanged();
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(OrderHistoryActivity.this, "Failed to load ordered products.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(OrderHistoryActivity.this, "Failed to load ordered products.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
+
 
 
 
@@ -143,7 +173,11 @@ public class OrderHistoryActivity extends AppCompatActivity {
         return true;
     }
     // Method to display cancellation confirmation dialog
-    private void showCancellationConfirmationDialog(ProductList product, int position) {
+    public void onCancelClicked(OrderedProduct product, int position) {
+        showCancellationConfirmationDialog(product, position);
+    }
+
+    private void showCancellationConfirmationDialog(OrderedProduct product, int position) {
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Cancellation")
                 .setMessage("Are you sure you want to cancel this product?")
@@ -157,12 +191,67 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Method to cancel the product
-    private void cancelProduct(ProductList product, int position) {
+    private void cancelProduct(OrderedProduct product, int position) {
         Toast.makeText(this, "Product canceled.", Toast.LENGTH_SHORT).show();
-        // Remove the product from the list
+
+        // Remove the product from the orderedProductsList
         orderedProductsList.remove(position);
         // Notify the adapter that the data set has changed
         adapter.notifyItemRemoved(position);
+
+        // Get the user ID
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            // Get the reference to the ordered product for the current user
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("orderedproduct").child(userId);
+            String orderId = product.getOrderId();
+            if (orderId != null) {
+                // Remove the ordered product node from Firebase
+                userRef.child(orderId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Product successfully removed from Firebase
+                        orderedProductsList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        Log.d("Cancel Product", "Product removed from Firebase");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to remove product from Firebase
+                        Log.e("Cancel Product", "Failed to cancel product and remove from Firebase: " + e.getMessage());
+                    }
+                });
+            } else {
+                Log.e("Cancel Product", "Order ID is null");
+            }
+        } else {
+            Log.e("Cancel Product", "User is null");
+        }
     }
+
+
+//    private void showCancellationConfirmationDialog(ProductList product, int position) {
+//        new AlertDialog.Builder(this)
+//                .setTitle("Confirm Cancellation")
+//                .setMessage("Are you sure you want to cancel this product?")
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        cancelProduct(product, position);
+//                    }
+//                })
+//                .setNegativeButton("No", null)
+//                .show();
+//    }
+//
+//    // Method to cancel the product
+//    private void cancelProduct(ProductList product, int position) {
+//        Toast.makeText(this, "Product canceled.", Toast.LENGTH_SHORT).show();
+//        // Remove the product from the list
+//        orderedProductsList.remove(position);
+//        // Notify the adapter that the data set has changed
+//        adapter.notifyItemRemoved(position);
+//    }
 }
