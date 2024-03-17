@@ -152,8 +152,9 @@ private EditText email, password;
             startActivity(new Intent(homeActivity.this, homeActivity.class));
 
             return true;
+
         }
-       else if (id == R.id.logout) {
+       else if (id == R.id.logput) {
             // Handle share click
 //            if (email != null && password != null) {
 //                email.setText("");
@@ -164,7 +165,7 @@ private EditText email, password;
             Toast.makeText(homeActivity.this, "user logged out", Toast.LENGTH_SHORT).show();
 
             finish();
-            return true;
+            return false;
         }
 
         return false;

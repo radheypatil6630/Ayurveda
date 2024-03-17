@@ -98,6 +98,7 @@ public class Purchaseproduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate to ProductListActivity on cancel button click
+                Toast.makeText(Purchaseproduct.this, "product is canceled and now you are going on home activity", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Purchaseproduct.this,homeActivity.class);
                 startActivity(intent);
                 finish();
@@ -229,6 +230,7 @@ private void goToPaymentActivity(String productPrice, String productName, String
     String deliveryDate = deliveryDateTextView.getText().toString();
     paymentIntent.putExtra("deliverydate", deliveryDate);
 
+    Toast.makeText(this, "Now  UPI-Payment page will be open", Toast.LENGTH_SHORT).show();
     startActivity(paymentIntent);
     finish(); // Finish the current activity
 }

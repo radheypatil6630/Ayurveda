@@ -84,20 +84,25 @@ public class RegisterPage extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(RegisterPage.this, "SignUp Unsuccessful, Please Try Again", Toast.LENGTH_SHORT).show();
                     } else {
+                        FirebaseUser user = task.getResult().getUser();
                         // Send email verification
-//                        user.sendEmailVerification().addOnCompleteListener(emailVerificationTask -> {
-//                            if (emailVerificationTask.isSuccessful()) {
+                        user.sendEmailVerification().addOnCompleteListener(emailVerificationTask -> {
+                            if (emailVerificationTask.isSuccessful()) {
 
                                 // Email sent successfully, you can navigate to the main activity or show a confirmation message
-                        FirebaseUser user = task.getResult().getUser();
+                       // FirebaseUser user = task.getResult().getUser();
                         saveAdditionalUserInfo(user.getUid(),fname, lname, mobno,emailid);
 
                         startActivity(new Intent(RegisterPage.this, MainActivity.class));
                         Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
                         finish();
+            }else {
+                        // Email verification failed, handle the error
+                        Toast.makeText(RegisterPage.this, "Email verification failed. Please try again.", Toast.LENGTH_SHORT).show();
                     }
-                });
-
+                  });
+               }
+             });
             }
         });
 

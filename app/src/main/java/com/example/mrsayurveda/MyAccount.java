@@ -125,20 +125,22 @@ public class MyAccount extends AppCompatActivity {
                 acc_name_edt.setText(userInfo.getFirstName());
                 acc_email_edt.setText(userInfo.getEmail());
                 acc_phone_edt.setText(userInfo.getPhoneNumber());
-
-                if(!userInfo.getGender().equals(""))
-                    acc_gender_edt.setText(userInfo.getGender());
-                if(!userInfo.getCity().equals(""))
-                    acc_city_edt.setText(userInfo.getCity());
-                if(!userInfo.getState().equals(""))
-                    acc_state_edt.setText(userInfo.getState());
-                if(!userInfo.getNationality().equals(""))
-                    acc_nationality_edt.setText(userInfo.getNationality());
-                if (!userInfo.getAddress().equals("")) // Retrieve and set the address
-                    acc_addr_edt.setText(userInfo.getAddress());
-                if(!userInfo.getDob().equals(""))
-                    dobPicker.setText(userInfo.getDob());
-
+                if (userInfo != null) {
+                    if (!userInfo.getGender().equals(""))
+                        acc_gender_edt.setText(userInfo.getGender());
+                    if (!userInfo.getCity().equals(""))
+                        acc_city_edt.setText(userInfo.getCity());
+                    if (!userInfo.getState().equals(""))
+                        acc_state_edt.setText(userInfo.getState());
+                    if (!userInfo.getNationality().equals(""))
+                        acc_nationality_edt.setText(userInfo.getNationality());
+                    if (userInfo.getAddress() != null && !userInfo.getAddress().equals("")) // Retrieve and set the address
+                        acc_addr_edt.setText(userInfo.getAddress());
+                    if (!userInfo.getDob().equals(""))
+                        dobPicker.setText(userInfo.getDob());
+                }else {
+                    Toast.makeText(MyAccount.this, "userinfo is null", Toast.LENGTH_SHORT).show();
+                }
 
             }
 

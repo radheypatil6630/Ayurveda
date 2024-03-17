@@ -118,21 +118,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             String price = orderIdSnapshot.child("productPrice").getValue(String.class);
                         String deliveryDate = orderIdSnapshot.child("deliveryDate").getValue(String.class);
 
-                        OrderedProduct orderedProduct = new OrderedProduct(productName, imageUrl, price, deliveryDate);
+                        String orderId = orderIdSnapshot.getKey(); // Retrieve orderId
+
+                        OrderedProduct orderedProduct = new OrderedProduct(productName, imageUrl, price, deliveryDate, orderId);
                         orderedProductsList.add(orderedProduct);
 
-                            // Create a ProductList object and add it to the list
-//                        ProductList product = new ProductList();
-//                        product.setProductName(productName);
-//                        product.setImageUrl(imageUrl);
-//                        product.setPrice(price);
-//                        product.setDeliveryDate(deliveryDate);
 
-//                        product.setDescription(description);
-//                        product.setProductType(productType);
-
-//                        orderedProductsList.add(product);
-                       // }
                     }
 
                     // Initialize the adapter if it's null
@@ -150,6 +141,11 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     } else {
                         // Notify the adapter that the data set has changed
                         adapter.notifyDataSetChanged();
+                    }
+                    // Check if the orderedProductsList is empty
+                    if (orderedProductsList.isEmpty()) {
+                        // Show a toast indicating that the activity is empty
+                        Toast.makeText(OrderHistoryActivity.this, "No orders found.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -196,7 +192,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         // Remove the product from the orderedProductsList
         orderedProductsList.remove(position);
-        // Notify the adapter that the data set has changed
+        // Notify the adapter that an item has been removed
         adapter.notifyItemRemoved(position);
 
         // Get the user ID
@@ -208,21 +204,23 @@ public class OrderHistoryActivity extends AppCompatActivity {
             String orderId = product.getOrderId();
             if (orderId != null) {
                 // Remove the ordered product node from Firebase
-                userRef.child(orderId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Product successfully removed from Firebase
-                        orderedProductsList.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        Log.d("Cancel Product", "Product removed from Firebase");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Failed to remove product from Firebase
-                        Log.e("Cancel Product", "Failed to cancel product and remove from Firebase: " + e.getMessage());
-                    }
-                });
+                userRef.child(orderId).removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Product successfully removed from Firebase
+                                Log.d("Cancel Product", "Product removed from Firebase");
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Failed to remove product from Firebase
+                                Log.e("Cancel Product", "Failed to cancel product and remove from Firebase: " + e.getMessage());
+                            }
+                        });
             } else {
                 Log.e("Cancel Product", "Order ID is null");
             }
@@ -232,26 +230,4 @@ public class OrderHistoryActivity extends AppCompatActivity {
     }
 
 
-//    private void showCancellationConfirmationDialog(ProductList product, int position) {
-//        new AlertDialog.Builder(this)
-//                .setTitle("Confirm Cancellation")
-//                .setMessage("Are you sure you want to cancel this product?")
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        cancelProduct(product, position);
-//                    }
-//                })
-//                .setNegativeButton("No", null)
-//                .show();
-//    }
-//
-//    // Method to cancel the product
-//    private void cancelProduct(ProductList product, int position) {
-//        Toast.makeText(this, "Product canceled.", Toast.LENGTH_SHORT).show();
-//        // Remove the product from the list
-//        orderedProductsList.remove(position);
-//        // Notify the adapter that the data set has changed
-//        adapter.notifyItemRemoved(position);
-//    }
 }

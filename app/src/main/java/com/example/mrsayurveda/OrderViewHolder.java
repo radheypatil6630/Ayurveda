@@ -29,23 +29,6 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
         return new ViewHolder(view);
     }
 
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        OrderedProduct orderedProduct = orderedProductList.get(position);
-//        holder.setDetails(orderedProduct.getProductName(), orderedProduct.getImageUrl(), "₹" + orderedProduct.getProductPrice(), orderedProduct.getDeliveryDate());
-//        // Set click listener for cancel button
-//        holder.cancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Get the adapter position from the holder
-//                int adapterPosition = holder.getAdapterPosition();
-//                // Call the onCancelClicked method of the activity
-//                if (v.getContext() instanceof OrderHistoryActivity) {
-//                    ((OrderHistoryActivity) v.getContext()).onCancelClicked(orderedProduct, position);
-//                }
-//            }
-//        });
-//    }
 @Override
 public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     OrderedProduct orderedProduct = orderedProductList.get(position);

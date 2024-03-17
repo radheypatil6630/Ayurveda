@@ -1,6 +1,7 @@
 package com.example.mrsayurveda;// MainActivity.java
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     TextView registerbtn;
     FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +52,20 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email,password)
                         .addOnCompleteListener(MainActivity.this, task -> {
                             if (task.isSuccessful()) {
-                                // If valid, start the next activity
-                                Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-//                                Intent stm = new Intent(MainActivity.this, homeFragment.class);
-//                                startActivity(stm);
-                                Intent intent = new Intent(MainActivity.this, homeActivity.class);
-                                startActivity(intent);
-                                finish();
-//                                getSupportFragmentManager().beginTransaction()
-//                                        .replace(R.id.fragment_container, new homeFragment())
-//                                        .commit();
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                if (user != null && user.isEmailVerified()) {
+                                    // Email is verified, proceed with login
+                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(MainActivity.this, homeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else {
+                                    // Email is not verified, show a message or take appropriate action
+                                    Toast.makeText(MainActivity.this, "Please check and verify your email before Signing In", Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                             }

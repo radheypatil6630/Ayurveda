@@ -11,12 +11,21 @@ public class OrderedProduct {
         // Default constructor required for Firebase
     }
 
-    public OrderedProduct(String productName, String imageUrl, String productPrice, String deliveryDate) {
+    public OrderedProduct(String productName, String imageUrl, String productPrice, String deliveryDate,String orderId) {
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.productPrice = productPrice;
         this.deliveryDate = deliveryDate; // Set delivery date
+        this.orderId=orderId;
     }
+
+    public OrderedProduct(String productName, String imageUrl, String price, String deliveryDate) {
+        this.productName = productName;
+        this.imageUrl = imageUrl;
+        this.productPrice = price;
+        this.deliveryDate = deliveryDate;
+    }
+
     public String getOrderId() {
         return orderId;
     }
