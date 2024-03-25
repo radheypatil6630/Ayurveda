@@ -40,8 +40,7 @@ public class DummyUPIPayment extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
-    // Define the list to hold paid products
-  //  List<ProductList> paidProductsList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,20 +180,6 @@ public class DummyUPIPayment extends AppCompatActivity {
             showErrorDialog("PIN must be at least 6 digits long");
         }
     }
-//    private void showSuccessDialog() {
-//        if (!isFinishing()) { // Check if the activity is not finishing
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Payment Successful")
-//                    .setMessage("Your payment was successful!")
-//                    .setPositiveButton("OK", (dialog, which) -> {
-//                        // Handle OK button click if needed
-//                        dialog.dismiss();
-//                        navigateToOrderHistoryActivity(); // Navigate to OrderHistoryActivity after dismissing dialog
-//                    })
-//                    .create()
-//                    .show();
-//        }
-//    }
 
     private void navigateToOrderHistoryActivity() {
         Intent intent = new Intent(DummyUPIPayment.this, OrderHistoryActivity.class);

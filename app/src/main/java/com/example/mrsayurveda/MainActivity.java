@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     TextView registerbtn;
     FirebaseAuth mAuth;
-
+    //private  StringBuilder passwordBuilder = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,21 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            if (currentUser.isEmailVerified()) {
+                startActivity(new Intent(this, homeActivity.class));
+                finish();
+            } else {
+                // User's email is not verified, prompt them to verify their email
+                Toast.makeText(MainActivity.this, "Please verify your email before signing in", Toast.LENGTH_SHORT).show();
+                mAuth.signOut(); // Sign out the user to prevent auto-login
+            }
+            // No user is signed in
+        }
 
        Textemail = findViewById(R.id.Email);
         Textpassword = findViewById(R.id.Password);
@@ -68,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                // Insert the new digit at the end of the StringBuilder
+
+                                Textpassword.setText("");
                             }
                         });
 

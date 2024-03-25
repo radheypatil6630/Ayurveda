@@ -146,7 +146,7 @@ public class MyAccount extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MyAccount.this, "failed to load user data", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MyAccount.this, "failed to load user data", Toast.LENGTH_SHORT).show();
             }
         });
         StorageReference storageReference;

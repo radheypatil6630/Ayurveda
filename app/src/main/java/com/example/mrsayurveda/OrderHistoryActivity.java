@@ -131,13 +131,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     if (adapter == null) {
                         adapter = new OrderViewHolder(orderedProductsList);
                         recyclerView.setAdapter(adapter);
-//                        adapter = new OrderViewHolder(orderedProductsList ,new ProductViewHolder.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(ProductList product, int position) {
-//                                // Handle item click if needed
-//                            }
-//                        });
-                      //  recyclerView.setAdapter(adapter);
+
                     } else {
                         // Notify the adapter that the data set has changed
                         adapter.notifyDataSetChanged();
@@ -188,7 +182,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
     }
 
     private void cancelProduct(OrderedProduct product, int position) {
-        Toast.makeText(this, "Product canceled.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Your Product is canceled .", Toast.LENGTH_SHORT).show();
 
         // Remove the product from the orderedProductsList
         orderedProductsList.remove(position);
@@ -210,7 +204,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 // Product successfully removed from Firebase
                                 Log.d("Cancel Product", "Product removed from Firebase");
-
+                              //  finish();
 
                             }
                         })

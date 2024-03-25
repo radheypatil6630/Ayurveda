@@ -57,14 +57,14 @@ public class RegisterPage extends AppCompatActivity {
                 lastName.requestFocus();
             } else if (mobno.isEmpty()) {
                 mobileNo.setError("Please enter mobile number");
+                mobileNo.requestFocus();
+                return;
                 // Check if the phone number is exactly 10 digits long
-                if (mobno.length() != 10) {
+            }else if (mobno.length() != 10) {
                     mobileNo.setError("Phone number must be 10 digits long");
                     mobileNo.requestFocus();
                     return; // Return from the method without proceeding further
-                }
-                mobileNo.requestFocus();
-            } else if (emailid.isEmpty() && pass.isEmpty() && confirmpass.isEmpty() && fname.isEmpty() && lname.isEmpty() && mobno.isEmpty()) {
+                } else if (emailid.isEmpty() && pass.isEmpty() && confirmpass.isEmpty() && fname.isEmpty() && lname.isEmpty() && mobno.isEmpty()) {
                 email.setError("Please enter email id");
                 email.requestFocus();
                 password.setError("Please enter password");

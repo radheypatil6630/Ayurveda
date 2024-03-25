@@ -112,14 +112,7 @@ private EditText email, password;
             }
         });
 
-        // Update the FloatingActionButton constraint
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Handle FAB click
-//            }
-//        });
+
     }
 
     private void navigateToProductList(String category) {
@@ -128,12 +121,7 @@ private EditText email, password;
         startActivity(intent);
     }
 
-// display at action bar
-//   @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main_menu, menu);
-//        return true;
-//    }
+
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -145,6 +133,7 @@ private EditText email, password;
         } else if (id == R.id.product_History) {
             // Handle product history click
             startActivity(new Intent(homeActivity.this,OrderHistoryActivity.class));
+
             return true;
         } else if (id == R.id.home) {
             // Handle home
