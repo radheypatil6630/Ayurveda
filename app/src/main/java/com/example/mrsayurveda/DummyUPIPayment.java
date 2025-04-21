@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,9 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DummyUPIPayment extends AppCompatActivity {
 
     EditText upiPasswordEditText;
@@ -33,7 +28,7 @@ public class DummyUPIPayment extends AppCompatActivity {
     TextView totalAmount;
     String imageUrl;
     String productName;
-    String price;
+    String price, purchasedPrice,addToCartPrice;
     String deliveryDateTextView;
 
     private final StringBuilder passwordBuilder = new StringBuilder();
@@ -55,7 +50,8 @@ public class DummyUPIPayment extends AppCompatActivity {
         payButton = findViewById(R.id.pay);
         totalAmount=findViewById(R.id.totalAmount);
 
-
+//        addToCartPrice= getIntent().getStringExtra("addToCartproductPrice");
+//        totalAmount.setText("₹ "+addToCartPrice);
 
         // Retrieve the product details from the Intent extras
          imageUrl = getIntent().getStringExtra("imageUrl");
@@ -158,12 +154,7 @@ public class DummyUPIPayment extends AppCompatActivity {
                     } else {
                         showErrorDialog("Failed to add ordered product to database");
                     }
-                // Navigate to the order history activity
-                Intent intent = new Intent(DummyUPIPayment.this, OrderHistoryActivity.class);
 
-                //    intent.putExtra("deliverydate", deliveryDateTextView);
-                startActivity(intent);
-                finish();
                 } else {
                     showErrorDialog("User not authenticated");
                 }
@@ -181,6 +172,7 @@ public class DummyUPIPayment extends AppCompatActivity {
         }
     }
 
+//    OrderHistoryActivity
     private void navigateToOrderHistoryActivity() {
         Intent intent = new Intent(DummyUPIPayment.this, OrderHistoryActivity.class);
         startActivity(intent);

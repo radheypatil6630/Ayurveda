@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".OrderHistoryActivity"
-    android:background="#CFE1C2">
+    android:background="@color/white">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderrecyclerView"
         android:layout_width="match_parent"

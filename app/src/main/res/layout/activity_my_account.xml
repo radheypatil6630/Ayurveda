@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg"
+    android:background="@color/white"
     tools:context=".MyAccount">
 
 
@@ -36,6 +36,7 @@
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:scaleType="centerCrop"
+                    android:elevation="5dp"
                     android:src="@drawable/blank_profile"
                     app:shapeAppearanceOverlay="@style/round" />
             </LinearLayout>

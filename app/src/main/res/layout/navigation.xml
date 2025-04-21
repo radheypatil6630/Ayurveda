@@ -19,12 +19,12 @@ android:gravity="bottom">
     android:textStyle="bold"
     tools:ignore="MissingConstraints" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Radhey Prakash Patil"
-    android:textSize="20dp"
-    android:textColor="#fff857"
-    android:textStyle="bold"
-    tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="shrusti bhosale"
+        android:textColor="#fff857"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
 </LinearLayout>

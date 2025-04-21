@@ -4,40 +4,51 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="Ayurveda"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MrsAyurveda"
-        tools:targetApi="31"
-        android:largeHeap="true">
+        tools:targetApi="31">
+        <activity
+            android:name=".ProductCartActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
 
+        <activity
+            android:name=".addProductActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
         <activity
             android:name=".Purchaseproduct"
             android:exported="false"
             android:label="Buy Product"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".RegisterPage"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
+        <activity
+            android:name=".RegisterPage"
             android:theme="@style/Base.Theme.MrsAyurveda.NoActionbar">
+
+
+
 
             <!-- Add any intent filters or other configuration for the activity here -->
         </activity>
-        <activity android:name=".ProductDetailsActivity"
+        <activity
+            android:name=".ProductDetailsActivity"
             android:exported="false"
             android:label="Product Details"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar">
-
-        </activity>
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
         <activity
             android:name=".ProductListActivity"
             android:exported="false"
             android:label="Product-List"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -51,44 +62,36 @@
         <activity
             android:name=".homeActivity"
             android:exported="false"
-            android:label="Home-page"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".ProfileActivity"
+            android:label="Ayureveda"
+           />
+<!--        android:theme="@style/Base.Theme.MrsAyurveda.HomeActionbar"-->
+        <activity
+            android:name=".OrderHistoryActivity"
             android:exported="false"
-            android:label="Profile"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".ShareActivity"
-            android:exported="false"
-            android:label="share app"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".OrderHistoryActivity"
-            android:exported="false"
-            android:label="Product History"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
+            android:label="Orders"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
         <activity
             android:name=".DummyUPIPayment"
             android:exported="false"
-            android:theme="@style/Base.Theme.MrsAyurveda.NoActionbar">
-        </activity>
-        <activity android:name=".ChangeImage"
+            android:theme="@style/Base.Theme.MrsAyurveda.NoActionbar" />
+        <activity
+            android:name=".ChangeImage"
             android:exported="false"
-            android:label="Change Image"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".MyAccount"
+            android:label="Change Profile Image"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
+        <activity
+            android:name=".ChangeProductImage"
+            android:exported="false"
+            android:label="Change Product Image"
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
+        <activity
+            android:name=".MyAccount"
             android:exported="false"
             android:label="Account info"
-            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar"/>
-
-        <activity android:name=".UserInfo"
-            android:exported="false"/>
-
-
-        <!--        android:label="@string/app_name"-->
-<!--        android:theme="@style/AppTheme"-->
+            android:theme="@style/Base.Theme.MrsAyurveda.Actionbar" />
+        <activity
+            android:name=".UserInfo"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -6,7 +6,8 @@ import android.util.Log;
 public class UserInfo {
     public String userId,firstName,lastName, phoneNumber, email,address;
     public String gender="",city="",state="",nationality="";
-    String panExpiry="",dob="";
+    String dob="";
+
 
     public UserInfo() {
         //Default Constructor

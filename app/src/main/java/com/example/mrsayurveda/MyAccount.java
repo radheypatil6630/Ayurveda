@@ -1,11 +1,5 @@
 package com.example.mrsayurveda;
 
-import static android.app.PendingIntent.getActivity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -20,8 +14,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -173,32 +170,7 @@ public class MyAccount extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
-//
-//                UserInfo userInfo = snapshot.getValue(UserInfo.class);
-//                selectedCountry = userInfo.getSelectedCountry();
-//                if(selectedCountry ==null)
-//                {
-//                    selectedCountry = "India";
-//
-//                }else
-//                {
-//                    selectedCountry = userInfo.getSelectedCountry();
-//
-//                }
-////                Toast.makeText(MyAccount.this, "country "+ selectedCountry, Toast.LENGTH_SHORT).show();
-//
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         saveButton.setOnClickListener(v->{
             // Get the phone number from the EditText
             String phoneNumber = acc_phone_edt.getText().toString();

@@ -3,17 +3,16 @@ package com.example.mrsayurveda;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.arch.core.executor.TaskExecutor;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +32,7 @@ public class Purchaseproduct extends AppCompatActivity {
 
     private TextView productNameTextView, productPriceTextView, deliveryDateTextView;
     private EditText usernameText, addressText,PhoneNumText;
-    private Button cancelButton, buyButton,btnchage,btnsave;
+    private Button addToCartButton, buyButton,btnchage,btnsave;
     private ImageView productImageView;
     private DatabaseReference userRef;
     private FirebaseAuth mAuth;
@@ -68,7 +67,7 @@ public class Purchaseproduct extends AppCompatActivity {
         addressText = findViewById(R.id.addressTextView);
         PhoneNumText = findViewById(R.id.phonenumTextView);
         productImageView = findViewById(R.id.productImageView);
-        cancelButton = findViewById(R.id.cancelButton);
+        addToCartButton = findViewById(R.id.addCartButton);
         buyButton = findViewById(R.id.buyButton);
         btnchage = findViewById(R.id.btnchange);
         btnsave = findViewById(R.id.btnsave);
@@ -94,14 +93,15 @@ public class Purchaseproduct extends AppCompatActivity {
         fetchUserData();
 
         // Cancel button click listener
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goToCartActivity(price,productName,imageUrl);
                 // Navigate to ProductListActivity on cancel button click
-                Toast.makeText(Purchaseproduct.this, "product is canceled and now you are going on home activity", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Purchaseproduct.this,homeActivity.class);
-                startActivity(intent);
-                finish();
+//                Toast.makeText(Purchaseproduct.this, "product is canceled and now you are going on home activity", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(Purchaseproduct.this,ProductCartActivity.class);
+//                startActivity(intent);
+//                finish();
             }
         });
 
@@ -234,6 +234,33 @@ private void goToPaymentActivity(String productPrice, String productName, String
     startActivity(paymentIntent);
     finish(); // Finish the current activity
 }
+
+    private void goToCartActivity(String productPrice, String productName, String imageUrl) {
+        userRef = FirebaseDatabase.getInstance().getReference("cartproduct");
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+
+            // Add the paid product to Firebase under the user's ID
+            DatabaseReference userOrderedProductsRef = userRef.child(userId);
+            String orderId = userOrderedProductsRef.push().getKey();
+            if (orderId != null) {
+                cartProduct cartProduct = new cartProduct(productName, imageUrl, productPrice, "deliver in 7 days", orderId);
+                cartProduct.setQuantityNum(1);
+
+                userOrderedProductsRef.child(orderId).setValue(cartProduct)
+                        .addOnSuccessListener(aVoid -> {
+                            Log.d("Firebase", "Product added to cart");
+                            Intent i = new Intent(this,ProductCartActivity.class);
+                            startActivity(i);
+
+                        })
+                        .addOnFailureListener(e -> Log.e("FirebaseError", "Failed to add product", e));
+            }
+        }
+
+    }
 
     private void enableEditTextFields(boolean enable) {
         // Enable or disable EditText fields based on the given parameter

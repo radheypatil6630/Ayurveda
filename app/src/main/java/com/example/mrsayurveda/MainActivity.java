@@ -1,4 +1,5 @@
 package com.example.mrsayurveda;// MainActivity.java
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +36,19 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser != null) {
             if (currentUser.isEmailVerified()) {
-                startActivity(new Intent(this, homeActivity.class));
+                Intent intent = new Intent(MainActivity.this, homeActivity.class);
+
+                if (currentUser.getEmail().equals("patilradhey6630@gmail.com") ) {
+                    // Admin user
+                    intent.putExtra("isAdmin", true);
+                    Log.d("good", "Admin login");
+                } else {
+                    // Regular user
+                    intent.putExtra("isAdmin", false);
+                    Log.d("good", "User login");
+                }
+
+                startActivity(intent);
                 finish();
             } else {
                 // User's email is not verified, prompt them to verify their email
@@ -48,10 +63,7 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.Login);
         registerbtn=findViewById(R.id.registerbtnlogin);
 
-        //username=jaydeep@gmail.com
-        //password=123456
 
-//        homeFragment homeFragment = new homeFragment();
         
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +82,29 @@ public class MainActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 if (user != null && user.isEmailVerified()) {
-                                    // Email is verified, proceed with login
-                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
                                     Intent intent = new Intent(MainActivity.this, homeActivity.class);
+
+                                    if (email.equals("patilradhey6630@gmail.com") && password.equals("123456")) {
+                                        // Admin user
+                                        intent.putExtra("isAdmin", true);
+                                        Log.d("good", "Admin login");
+                                    } else {
+                                        // Regular user
+                                        intent.putExtra("isAdmin", false);
+                                        Log.d("good", "User login");
+                                    }
+
                                     startActivity(intent);
                                     finish();
+
+
+
+                                    // Email is verified, proceed with login
+//                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//
+//                                    Intent intent = new Intent(MainActivity.this, homeActivity.class);
+//                                    startActivity(intent);
+
                                 }else {
                                     // Email is not verified, show a message or take appropriate action
                                     Toast.makeText(MainActivity.this, "Please check and verify your email before Signing In", Toast.LENGTH_SHORT).show();
@@ -98,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-        // ... other code
+
 
 
         public void onClearEditText(String email, String password) {

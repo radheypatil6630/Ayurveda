@@ -4,7 +4,6 @@ package com.example.mrsayurveda;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,17 +34,17 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     holder.setDetails(orderedProduct.getProductName(), orderedProduct.getImageUrl(), "₹" + orderedProduct.getProductPrice(), orderedProduct.getDeliveryDate());
 
     // Set click listener for cancel button
-    holder.cancelButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // Get the adapter position from the holder
-            int adapterPosition = holder.getAdapterPosition();
-            // Call the onCancelClicked method of the activity
-            if (v.getContext() instanceof OrderHistoryActivity) {
-                ((OrderHistoryActivity) v.getContext()).onCancelClicked(orderedProduct, adapterPosition);
-            }
-        }
-    });
+//    holder.cancelButton.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            // Get the adapter position from the holder
+//            int adapterPosition = holder.getAdapterPosition();
+//            // Call the onCancelClicked method of the activity
+//            if (v.getContext() instanceof OrderHistoryActivity) {
+//                ((OrderHistoryActivity) v.getContext()).onCancelClicked(orderedProduct, adapterPosition);
+//            }
+//        }
+//    });
 }
 
     @Override
@@ -56,7 +55,7 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage;
         private TextView productName, productPrice, deliveryDateTextView,delivery;
-        private ImageButton cancelButton;
+//        private ImageButton cancelButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +63,7 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
             deliveryDateTextView = itemView.findViewById(R.id.deliveryDateTextView);
-            cancelButton = itemView.findViewById(R.id.cancelButton);
+//            cancelButton = itemView.findViewById(R.id.cancelButton);
             delivery = itemView.findViewById(R.id.delivery);
         }
 
