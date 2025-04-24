@@ -5,8 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductListActivity"
-    android:background="@color/white">
-
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background17"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
 
     <EditText
         android:id="@+id/editTextText4"
@@ -54,7 +59,25 @@
                 android:scrollbars="vertical"/>
         </RelativeLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LoadingAnimation1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/NotFoundAnimation3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:lottie_rawRes="@raw/not_found"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

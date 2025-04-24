@@ -1,19 +1,23 @@
 package com.example.mrsayurveda;
 
+import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +34,10 @@ public class ProductListActivity extends AppCompatActivity {
     private List<ProductList> productList;
     private ProductViewHolder adapter;
 
+    private FirebaseAuth firebaseAuth;
+
     private EditText searchEditText;
+    private LottieAnimationView notFoundAnimation,loadingAnimation;
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -43,6 +50,7 @@ public class ProductListActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +60,8 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         searchEditText = findViewById(R.id.editTextText4);
+        notFoundAnimation = findViewById(R.id.NotFoundAnimation3);
+        loadingAnimation = findViewById(R.id.LoadingAnimation1);
 
         // Get the category from the intent
         String category = getIntent().getStringExtra("CATEGORY");
@@ -71,6 +81,8 @@ public class ProductListActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
+        loadingAnimation.setVisibility(View.VISIBLE);
+        loadingAnimation.playAnimation();
 
        databaseReference = FirebaseDatabase.getInstance().getReference().child("ProductList").child(category);
 
@@ -106,9 +118,36 @@ public class ProductListActivity extends AppCompatActivity {
 
 
                 adapter.notifyDataSetChanged();
+
+                loadingAnimation.cancelAnimation();
+                loadingAnimation.setVisibility(View.GONE);
+
                 // Check if productList is empty after populating it
                 if (productList.isEmpty()) {
-                    Toast.makeText(ProductListActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                    recyclerView.setVisibility(View.GONE);
+                    notFoundAnimation.setVisibility(View.VISIBLE);
+                    notFoundAnimation.playAnimation();
+
+//                    notFoundAnimation.addAnimatorListener(new Animator.AnimatorListener() {
+//                        @Override
+//                        public void onAnimationStart(Animator animation) {
+//                            // nothing
+//                        }
+//
+//                        @Override
+//                        public void onAnimationEnd(Animator animation) {
+//
+//                            recyclerView.setVisibility(View.VISIBLE);
+//                            notFoundAnimation.setVisibility(View.GONE);
+//                        }
+//
+//                        @Override
+//                        public void onAnimationCancel(Animator animation) {}
+//
+//                        @Override
+//                        public void onAnimationRepeat(Animator animation) {}
+//                    });
+//                    Toast.makeText(ProductListActivity.this, "No products found", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -163,36 +202,41 @@ public class ProductListActivity extends AppCompatActivity {
                 filteredList.add(product);
             }
         }
+        if (filteredList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            notFoundAnimation.setVisibility(View.VISIBLE);
+            notFoundAnimation.playAnimation();
 
+
+                notFoundAnimation.addAnimatorListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    // nothing
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                    recyclerView.setVisibility(View.VISIBLE);
+                    notFoundAnimation.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {}
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {}
+            });
+
+//
+//            Toast.makeText(ProductListActivity.this, "No ProductType found", Toast.LENGTH_SHORT).show();
+        }
         // Update RecyclerView with filtered list
         adapter.filterList(filteredList);
     }
 
 
-//    private void filterProducts(String query) {
-//        List<ProductList> filteredList = new ArrayList<>();
-//
-//        if (query.isEmpty()) {
-//            filteredList.addAll(productList);
-//        } else {
-//            for (ProductList product : productList) {
-//                if (product != null && product.getProductType() != null) {
-//                    // String productName = product.getProductName();
-//                    if (product.getProductName() != null && product.getProductName().toLowerCase().contains(query.toLowerCase()) || product.getProductType().toLowerCase().contains(query.toLowerCase())) {
-//                        filteredList.add(product);
-//                    }
-//
-//                }
-//            }
-//        }
-//        // Update the adapter with filtered results
-//        adapter.filterList(filteredList);
-//
-//        // Show a toast message if no results are found
-//        if (filteredList.isEmpty() && !query.isEmpty()) {
-//            Toast.makeText(ProductListActivity.this, "No product found", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+
         private void showProductsByType (String productType){
             List<ProductList> filteredList = new ArrayList<>();
 
@@ -207,7 +251,30 @@ public class ProductListActivity extends AppCompatActivity {
 
             // Show a toast message if no results are found
             if (filteredList.isEmpty()) {
-                Toast.makeText(ProductListActivity.this, "No ProductType found", Toast.LENGTH_SHORT).show();
+                recyclerView.setVisibility(View.GONE);
+                notFoundAnimation.setVisibility(View.VISIBLE);
+                notFoundAnimation.playAnimation();
+
+                notFoundAnimation.addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        // nothing
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+
+                        recyclerView.setVisibility(View.VISIBLE);
+                        notFoundAnimation.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {}
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {}
+                });
+//                Toast.makeText(ProductListActivity.this, "No ProductType found", Toast.LENGTH_SHORT).show();
             }
         }
     @Override
@@ -226,6 +293,5 @@ public class ProductListActivity extends AppCompatActivity {
         // Notify adapter after fetching data
         adapter.notifyDataSetChanged();
     }
-
 
 }

@@ -1,16 +1,21 @@
 package com.example.mrsayurveda;// MainActivity.java
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     TextView registerbtn;
     FirebaseAuth mAuth;
-    //private  StringBuilder passwordBuilder = new StringBuilder();
+
+    LottieAnimationView loginAnimation , loadingAnimation;
+    ShapeableImageView profileImage;
+    LinearLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
+        loadingAnimation = findViewById(R.id.LoadingAnimation4);
+        loginAnimation = findViewById(R.id.LoginAnimation);
+        profileImage = findViewById(R.id.profileImage);
+        mainLayout = findViewById(R.id.linear_layout_login);
 
         if (currentUser != null) {
             if (currentUser.isEmailVerified()) {
@@ -63,8 +75,22 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.Login);
         registerbtn=findViewById(R.id.registerbtnlogin);
 
+        mainLayout.setVisibility(View.GONE);
+        profileImage.setVisibility(View.GONE);
+        loadingAnimation.setVisibility(View.VISIBLE);
+        loadingAnimation.playAnimation();
+        loadingAnimation.addAnimatorListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // Hide animation view
+                loadingAnimation.setVisibility(View.GONE);
 
-        
+                // Show other components
+                mainLayout.setVisibility(View.VISIBLE);
+                profileImage.setVisibility(View.VISIBLE);
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,22 +108,31 @@ public class MainActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 if (user != null && user.isEmailVerified()) {
-                                    Intent intent = new Intent(MainActivity.this, homeActivity.class);
+                                    mainLayout.setVisibility(View.GONE);
+                                    profileImage.setVisibility(View.GONE);
+                                    loginAnimation.setVisibility(View.VISIBLE);
+                                    loginAnimation.playAnimation();
+                                    loginAnimation.addAnimatorListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
 
-                                    if (email.equals("patilradhey6630@gmail.com") && password.equals("123456")) {
-                                        // Admin user
-                                        intent.putExtra("isAdmin", true);
-                                        Log.d("good", "Admin login");
-                                    } else {
-                                        // Regular user
-                                        intent.putExtra("isAdmin", false);
-                                        Log.d("good", "User login");
-                                    }
+                                            Intent intent = new Intent(MainActivity.this, homeActivity.class);
 
-                                    startActivity(intent);
-                                    finish();
+                                            if (email.equals("patilradhey6630@gmail.com") && password.equals("123456")) {
+                                                // Admin user
+                                                intent.putExtra("isAdmin", true);
+                                                Log.d("good", "Admin login");
+                                            } else {
+                                                // Regular user
+                                                intent.putExtra("isAdmin", false);
+                                                Log.d("good", "User login");
+                                            }
 
-
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        });
 
                                     // Email is verified, proceed with login
 //                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();

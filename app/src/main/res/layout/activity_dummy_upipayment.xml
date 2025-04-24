@@ -280,5 +280,26 @@
             app:layout_rowWeight="1" />
     </androidx.gridlayout.widget.GridLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/orderSuccessAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+    app:lottie_rawRes="@raw/transcationdone"
+    app:lottie_autoPlay="false"
+    app:lottie_loop="false" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/orderFailedsAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:lottie_rawRes="@raw/wrong_pin"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

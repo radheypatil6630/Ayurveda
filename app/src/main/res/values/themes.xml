@@ -7,8 +7,8 @@
     </style>
     <style name="Base.Theme.MrsAyurveda.Actionbar" parent="Theme.AppCompat.Light">
 
-        <item name="colorPrimary">#9FCAFF</item>
-        <item name="colorPrimaryDark">#9FCAFF</item>
+        <item name="colorPrimary">#11aa2b</item>
+        <item name="colorPrimaryDark">#11aa2b</item>
     </style>
 
 <!--    <style name="Base.Theme.MrsAyurveda.HomeActionbar" parent="Theme.AppCompat.Light">-->

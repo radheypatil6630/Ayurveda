@@ -198,9 +198,7 @@ protected void onResume() {
             // Handle the 3-line icon click here and show horizontal menu as popup
             showPopupMenu();
             return true;
-        }
-
-        if (id == R.id.profile) {
+        }else if (id == R.id.profile1) {
             // Handle profile click
             startActivity(new Intent(homeActivity.this, MyAccount.class));
 
@@ -214,11 +212,13 @@ protected void onResume() {
             // Handle product history click
 
             return true;
-        } else if (id == R.id.like) {
-            // Handle product history click
-
-            return true;
-        }else if (id == R.id.logout) {
+        }
+//        else if (id == R.id.like) {
+//            // Handle product history click
+//
+//            return true;
+//        }
+        else if (id == R.id.logout) {
             // Handle logout click
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(homeActivity.this, MainActivity.class));
@@ -242,8 +242,17 @@ protected void onResume() {
                 if (id == R.id.settings) {
                     Toast.makeText(homeActivity.this, "Settings clicked", Toast.LENGTH_SHORT).show();
                     return true;
+                }else if (id == R.id.profile1) {
+                    // Handle profile click
+                    startActivity(new Intent(homeActivity.this, MyAccount.class));
+
+                    return true;
                 } else if (id == R.id.order) {
                     startActivity(new Intent(homeActivity.this, OrderHistoryActivity.class));
+                    return true;
+                }else if (id == R.id.aboutus) {
+                    // Handle product history click
+
                     return true;
                 } else if (id == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();

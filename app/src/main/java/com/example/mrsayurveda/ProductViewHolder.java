@@ -1,14 +1,14 @@
 package com.example.mrsayurveda;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,22 +43,6 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
       return new ViewHolder(view);
     }
 
-//@NonNull
-//@Override
-//public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//    // Check the context to determine which layout to inflate
-//    Context context = parent.getContext();
-//    LayoutInflater inflater = LayoutInflater.from(context);
-//    View view;
-//
-//    // Inflate the appropriate layout based on the context
-//    if (context instanceof OrderHistoryActivity) {
-//        view = inflater.inflate(R.layout.orderrecycleview, parent, false);
-//    } else {
-//        view = inflater.inflate(R.layout.activity_recycleview, parent, false);
-//    }
-//    return new ViewHolder(view);
-//}
 
 
     @Override
@@ -77,6 +61,18 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
                 }
             });
         }
+
+//        holder.cancelButton1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Get the adapter position from the holder
+//                int adapterPosition = holder.getAdapterPosition();
+//                // Call the onCancelClicked method of the activity
+//                if (v.getContext() instanceof ProductListActivity) {
+//                    ((ProductListActivity) v.getContext()).onCancelClicked(product, adapterPosition);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -84,7 +80,7 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
         return productList.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView productImage;
+        private ImageView productImage, cancelButton1;
         private TextView productName, productPrice, delivery;//, deliveryDateTextView;
        // private WindowDecorActionBar.TabImpl deliveryDateTextView;
 
@@ -95,19 +91,11 @@ public class ProductViewHolder extends RecyclerView.Adapter<ProductViewHolder.Vi
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
             delivery = itemView.findViewById(R.id.delivery);
-       //     deliveryDateTextView=itemView.findViewById(R.id.deliveryDateTextView);
+//            cancelButton1 = itemView.findViewById(R.id.cancelButton1);
+
         }
 
-//        public void setDetails(String productName, String imageUrl, String price) {
-//            // Set the data to the views
-//            Picasso.get().load(imageUrl).into(productImage);
-//            this.productName.setText(productName);
-//            this.productPrice.setText(price);
-//            delivery.setText("Free delivery");
-//        }
 
-        // Inside ProductViewHolder.java
-        // Inside ProductViewHolder.java
         public void setDetails(String ProductName, String imageUrl, String price) {  //,String deliveryDate
             // Check if productImageView is null
             if (productImage != null) {

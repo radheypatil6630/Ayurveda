@@ -1,11 +1,13 @@
 package com.example.mrsayurveda;
 
+import com.google.firebase.database.PropertyName;
+
 public class addProduct {
 
-    private String productImage;
-    private String productName;
-    private String productPrice;
-    private String productDescrition;
+    private String imageUrl;
+    private String price;
+    private String ProductName;
+    private String description;
 
     private String category;
     private String subCategory;
@@ -13,45 +15,45 @@ public class addProduct {
     public addProduct() {
     }
 
-    public addProduct( String productImage,String productName, String productPrice, String productDescrition, String category, String subCategory) {
-        this.productImage = productImage;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productDescrition = productDescrition;
-        this.category = category;
-        this.subCategory = subCategory;
+    public addProduct(String imageUrl, String ProductName, String price, String description) {
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.ProductName = ProductName;
+        this.description = description;
     }
 
-    public String getProductImage() {
-        return productImage;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    @PropertyName("ProductName")
     public String getProductName() {
-        return productName;
+        return ProductName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    @PropertyName("ProductName")
+    public void setProductName(String ProductName) {
+        ProductName = ProductName;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public String getProductDescrition() {
-        return productDescrition;
-    }
-
-    public void setProductDescrition(String productDescrition) {
-        this.productDescrition = productDescrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCategory() {

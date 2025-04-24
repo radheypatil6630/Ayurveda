@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+
     tools:context=".MyAccount">
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background15"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,6 +69,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
+                    android:backgroundTint="#FFFFFF"
                     android:hint="Full Name"
                     android:inputType="text"
                     android:paddingStart="20dp"
@@ -91,6 +97,7 @@
                         android:paddingStart="20dp"
                         android:paddingTop="18dp"
                         android:paddingEnd="20dp"
+                        android:backgroundTint="#FFFFFF"
                         android:paddingBottom="14dp"
                         android:textSize="15dp"
                         android:text="Date of Birth"
@@ -106,6 +113,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/custom_edit_text"
                         android:ems="10"
+                        android:backgroundTint="#FFFFFF"
                         android:hint="Gender"
                         android:inputType="text"
                         android:paddingStart="20dp"
@@ -123,6 +131,7 @@
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
                     android:hint="City"
+                    android:backgroundTint="#FFFFFF"
                     android:inputType="text"
                     android:paddingStart="20dp"
                     android:paddingTop="15dp"
@@ -138,13 +147,14 @@
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
                     android:hint="State"
+                    android:backgroundTint="#FFFFFF"
                     android:inputType="text"
                     android:paddingStart="20dp"
                     android:paddingTop="15dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="15dp"
                     android:textStyle="bold" />
-
+<!--                F2F2F2-->
                 <EditText
                     android:id="@+id/acc_nationality_edt"
                     android:layout_width="match_parent"
@@ -152,6 +162,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
+                    android:backgroundTint="#FFFFFF"
                     android:hint="Nationality"
                     android:inputType="text"
                     android:paddingStart="20dp"
@@ -187,6 +198,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
+                    android:backgroundTint="#FFFFFF"
                     android:hint="Email ID"
                     android:inputType="text"
                     android:paddingStart="20dp"
@@ -201,6 +213,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
+                    android:backgroundTint="#FFFFFF"
                     android:hint="Mobile Number"
                     android:inputType="text"
                     android:paddingStart="20dp"
@@ -215,6 +228,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/custom_edit_text"
                     android:ems="10"
+                    android:backgroundTint="#FFFFFF"
                     android:hint="Address"
                     android:inputType="text"
                     android:paddingStart="20dp"

@@ -92,6 +92,10 @@ public class Purchaseproduct extends AppCompatActivity {
         // Fetch user-specific data and populate the TextView fields
         fetchUserData();
 
+
+
+
+
         // Cancel button click listener
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +175,7 @@ public class Purchaseproduct extends AppCompatActivity {
         String formattedDate = dateFormat.format(deliveryDate);
 
         // Set the expected delivery date to the TextView
-        deliveryDateTextView.setText("Expected Delivery Date :- " + formattedDate);
+        deliveryDateTextView.setText("Expected Arrival :- " + formattedDate);
     }
 
     private void fetchUserData() {
@@ -235,32 +239,84 @@ private void goToPaymentActivity(String productPrice, String productName, String
     finish(); // Finish the current activity
 }
 
-    private void goToCartActivity(String productPrice, String productName, String imageUrl) {
-        userRef = FirebaseDatabase.getInstance().getReference("cartproduct");
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
+//    private void goToCartActivity(String productPrice, String productName, String imageUrl) {
+//        userRef = FirebaseDatabase.getInstance().getReference("cartproduct");
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            String userId = user.getUid();
+//
+//            // Add the paid product to Firebase under the user's ID
+//            DatabaseReference userOrderedProductsRef = userRef.child(userId);
+//            String orderId = userOrderedProductsRef.push().getKey();
+//            if (orderId != null) {
+//                cartProduct cartProduct = new cartProduct(productName, imageUrl, productPrice, "Deliver in 7 days", orderId);
+//                cartProduct.setQuantityNum(1);
+//
+//                userOrderedProductsRef.child(orderId).setValue(cartProduct)
+//                        .addOnSuccessListener(aVoid -> {
+//                            Log.d("Firebase", "Product added to cart");
+//                            Intent i = new Intent(this,ProductCartActivity.class);
+//                            startActivity(i);
+//
+//                        })
+//                        .addOnFailureListener(e -> Log.e("FirebaseError", "Failed to add product", e));
+//            }
+//        }
+//
+//    }
+private void goToCartActivity(String productPrice, String productName, String imageUrl) {
+    userRef = FirebaseDatabase.getInstance().getReference("cartproduct");
+    mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    if (user != null) {
+        String userId = user.getUid();
+        DatabaseReference userOrderedProductsRef = userRef.child(userId);
 
-            // Add the paid product to Firebase under the user's ID
-            DatabaseReference userOrderedProductsRef = userRef.child(userId);
-            String orderId = userOrderedProductsRef.push().getKey();
-            if (orderId != null) {
-                cartProduct cartProduct = new cartProduct(productName, imageUrl, productPrice, "deliver in 7 days", orderId);
-                cartProduct.setQuantityNum(1);
+        userOrderedProductsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean productExists = false;
 
-                userOrderedProductsRef.child(orderId).setValue(cartProduct)
-                        .addOnSuccessListener(aVoid -> {
-                            Log.d("Firebase", "Product added to cart");
-                            Intent i = new Intent(this,ProductCartActivity.class);
-                            startActivity(i);
+                for (DataSnapshot productSnap : snapshot.getChildren()) {
+                    cartProduct existingProduct = productSnap.getValue(cartProduct.class);
+                    if (existingProduct != null && existingProduct.getProductName().equals(productName)) {
+                        // Product already in cart: increase quantity
+                        int currentQty = existingProduct.getQuantityNum();
+                        productSnap.getRef().child("quantityNum").setValue(currentQty + 1);
+                        Toast.makeText(Purchaseproduct.this, "Product quantity updated in cart", Toast.LENGTH_SHORT).show();
 
-                        })
-                        .addOnFailureListener(e -> Log.e("FirebaseError", "Failed to add product", e));
+                        Intent i = new Intent(Purchaseproduct.this, ProductCartActivity.class);
+                        startActivity(i);
+                        productExists = true;
+                        break;
+                    }
+                }
+
+                if (!productExists) {
+                    // Product not in cart: add new entry
+                    String orderId = userOrderedProductsRef.push().getKey();
+                    if (orderId != null) {
+                        cartProduct newProduct = new cartProduct(productName, imageUrl, productPrice, "Deliver in 7 days", orderId);
+                        newProduct.setQuantityNum(1);
+                        userOrderedProductsRef.child(orderId).setValue(newProduct)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("Firebase", "Product added to cart");
+                                    Intent i = new Intent(Purchaseproduct.this, ProductCartActivity.class);
+                                    startActivity(i);
+                                })
+                                .addOnFailureListener(e -> Log.e("FirebaseError", "Failed to add product", e));
+                    }
+                }
             }
-        }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Failed to read cart", error.toException());
+            }
+        });
     }
+}
 
     private void enableEditTextFields(boolean enable) {
         // Enable or disable EditText fields based on the given parameter

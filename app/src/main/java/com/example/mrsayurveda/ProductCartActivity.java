@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,7 @@ public class ProductCartActivity extends AppCompatActivity {
     private String deliveryDate;
 
     private int totalPrice,totalItems;
+    private LottieAnimationView notFoundAnimation,loadingAnimation;
 
 
 
@@ -87,6 +89,8 @@ public class ProductCartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         subtotal = findViewById(R.id.subtotal);
 
+        notFoundAnimation = findViewById(R.id.NotFoundAnimation1);
+        loadingAnimation = findViewById(R.id.LoadingAnimation3);
 
         proceedBuyBtn = findViewById(R.id.proceed_buyButton);
 
@@ -123,10 +127,9 @@ public class ProductCartActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
-//            DatabaseReference userRef = databaseReference.child(userId);
-//            DatabaseReference userOrderedProductsRef = databaseReference.child(userId);
-//            String orderId = userOrderedProductsRef.push().getKey();
-//            OrderedProduct orderedProduct = new OrderedProduct(productName, imageUrl, price, deliveryDateTextView,orderId);
+
+            loadingAnimation.setVisibility(View.VISIBLE);
+            loadingAnimation.playAnimation();
 
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("cartproduct").child(userId);
 
@@ -151,7 +154,8 @@ public class ProductCartActivity extends AppCompatActivity {
 
                         cartProductsList.add(cartProduct);
 
-
+                        loadingAnimation.cancelAnimation();
+                        loadingAnimation.setVisibility(View.GONE);
                     }
 
 
@@ -166,6 +170,28 @@ public class ProductCartActivity extends AppCompatActivity {
                     // Check if the cartProductsList is empty
                     if (cartProductsList.isEmpty()) {
                         // Show a toast indicating that the activity is empty
+                        recyclerView.setVisibility(View.GONE);
+                        notFoundAnimation.setVisibility(View.VISIBLE);
+                        notFoundAnimation.playAnimation();
+//                        notFoundAnimation.addAnimatorListener(new Animator.AnimatorListener() {
+//                            @Override
+//                            public void onAnimationStart(Animator animation) {
+//                                // nothing
+//                            }
+//
+//                            @Override
+//                            public void onAnimationEnd(Animator animation) {
+//
+//                                recyclerView.setVisibility(View.VISIBLE);
+//                                notFoundAnimation.setVisibility(View.GONE);
+//                            }
+//
+//                            @Override
+//                            public void onAnimationCancel(Animator animation) {}
+//
+//                            @Override
+//                            public void onAnimationRepeat(Animator animation) {}
+//                        });
                         Toast.makeText(ProductCartActivity.this, "No orders found.", Toast.LENGTH_SHORT).show();
                     }
                     updateSubtotalAndButton();

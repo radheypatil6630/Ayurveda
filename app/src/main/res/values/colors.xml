@@ -6,12 +6,12 @@
     <color name="rating_bg">#3F51B5</color>
     <color name="app_bg">#daedfc</color>
     <color name="hotel_search_bg">#C8E1E1E1</color>
-    <color name="hotel_search_border">#BDBDBD</color>
+    <color name="hotel_search_border">#E4E0E0</color>
     <color name="gray">#E1C6C6C6</color>
-    <color name="calbtn">#0f93fe</color>
+    <color name="calbtn">#67BD6A</color>
     <color name="transparent">#00000000</color>
     <color name="subtext">#202020</color>
-    <color name="account_title">#007359</color>
+    <color name="account_title">#027707</color>
     <color name="actionBarColor">#ED9E6A</color>
     <color name="increment_border">#FFEB3B</color>
     <color name="btn_bg">#FEDB71</color>
@@ -19,5 +19,5 @@
     <color name="border">#EEEEEE</color>
     <color name="box_bg">#FAFAFA </color>
     <color name="view_bg">#B5B2B2</color>
-
+    <color name="price_color">#0DB144</color>
 </resources>

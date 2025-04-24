@@ -19,7 +19,7 @@
             <solid android:color="#FAFAFA  " />
             <stroke
                 android:width="2dp"
-                android:color="@color/increment_border"
+                android:color="#0C8F12"
                 />
         </shape>
     </item>

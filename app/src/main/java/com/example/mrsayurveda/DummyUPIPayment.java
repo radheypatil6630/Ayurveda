@@ -1,19 +1,25 @@
 package com.example.mrsayurveda;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.gridlayout.widget.GridLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +36,11 @@ public class DummyUPIPayment extends AppCompatActivity {
     String productName;
     String price, purchasedPrice,addToCartPrice;
     String deliveryDateTextView;
+
+    private LottieAnimationView successanimation, failedanimation;
+    private LinearLayout mainComponent;
+    private GridLayout gridComponent;
+
 
     private final StringBuilder passwordBuilder = new StringBuilder();
 
@@ -49,6 +60,13 @@ public class DummyUPIPayment extends AppCompatActivity {
         upiPasswordEditText = findViewById(R.id.pinpass);
         payButton = findViewById(R.id.pay);
         totalAmount=findViewById(R.id.totalAmount);
+         successanimation = findViewById(R.id.orderSuccessAnimation);
+        failedanimation = findViewById(R.id.orderFailedsAnimation);
+         mainComponent = findViewById(R.id.linearLayout4);
+         gridComponent = findViewById(R.id.gridLayout);
+
+// Hide main content and show animation
+
 
 //        addToCartPrice= getIntent().getStringExtra("addToCartproductPrice");
 //        totalAmount.setText("₹ "+addToCartPrice);
@@ -125,6 +143,10 @@ public class DummyUPIPayment extends AppCompatActivity {
             if (enteredPIN.equals("123456")) {
                 // Payment successful
                 Toast.makeText(this, "Payment is successfully done", Toast.LENGTH_SHORT).show();
+                mainComponent.setVisibility(View.GONE);
+                gridComponent.setVisibility(View.GONE);
+                successanimation.setVisibility(View.VISIBLE);
+                successanimation.playAnimation();
                 // Inside performDummyPayment method, after payment is successful
                 // Get the current user ID
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -141,7 +163,8 @@ public class DummyUPIPayment extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         // Product added successfully
-                                        navigateToOrderHistoryActivity();
+//                                        navigateToOrderHistoryActivity();
+                                        animationFunction();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -161,7 +184,31 @@ public class DummyUPIPayment extends AppCompatActivity {
                 // Navigate to the order activity or perform any other action
             } else {
                 // Incorrect PIN
-                showErrorDialog("PIN is incorrect");
+                mainComponent.setVisibility(View.GONE);
+                gridComponent.setVisibility(View.GONE);
+                failedanimation.setVisibility(View.VISIBLE);
+                failedanimation.playAnimation();
+
+                failedanimation.addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        // nothing
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        failedanimation.setVisibility(View.GONE);
+                        mainComponent.setVisibility(View.VISIBLE);
+                        gridComponent.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {}
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {}
+                });
+//                showErrorDialog("PIN is incorrect");
 
                 // Clear the PIN digits and allow the user to enter a new PIN
                 clearPIN();
@@ -195,5 +242,19 @@ public class DummyUPIPayment extends AppCompatActivity {
         // Clear the passwordBuilder and update the EditText
         passwordBuilder.setLength(0);
         updatePasswordEditText();
+    }
+
+    private  void animationFunction(){
+        successanimation.addAnimatorListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                // Navigate to next page after animation
+                Intent intent = new Intent(DummyUPIPayment.this, OrderHistoryActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
